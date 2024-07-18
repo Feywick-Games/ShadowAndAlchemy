@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cj1kns8r4alw1"]
+
+[ext_resource type="Script" path="res://Node/Character/character.gd" id="1_tig60"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Character" type="Node2D" parent="."]
+script = ExtResource("1_tig60")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(277, 178)
