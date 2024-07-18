@@ -1,11 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://cj1kns8r4alw1"]
+[gd_scene load_steps=4 format=3 uid="uid://cj1kns8r4alw1"]
 
-[ext_resource type="Script" path="res://Node/Character/character.gd" id="1_tig60"]
+[ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="1_ckvfe"]
+[ext_resource type="Texture2D" uid="uid://bcdh7j2xjmlqf" path="res://Scene/Character/Mei/_Sprite/mei.png" id="2_0i3fu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_unskg"]
+size = Vector2(12, 11)
 
 [node name="Level" type="Node2D"]
+visibility_layer = 3
+y_sort_enabled = true
 
-[node name="Character" type="Node2D" parent="."]
-script = ExtResource("1_tig60")
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(277, 178)
+[node name="EffectGroup" type="Node2D" parent="." groups=["effect_group"]]
+visibility_layer = 3
+
+[node name="Player" parent="." instance=ExtResource("1_ckvfe")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 108)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_unskg")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture = ExtResource("2_0i3fu")

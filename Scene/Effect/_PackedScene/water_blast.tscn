@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://csdb4iy25beuv"]
+
+[sub_resource type="Curve" id="Curve_5xabh"]
+_data = [Vector2(0.0144928, 1), 0.0, 0.150663, 0, 0, Vector2(0.960145, 0), 0.0264191, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_0sn5j"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.375)
+colors = PackedColorArray(0.384314, 0.568627, 0.721569, 1, 0.670588, 0.815686, 0.878431, 1)
+
+[node name="WaterBlast" type="CPUParticles2D"]
+position = Vector2(1, 0)
+amount = 256
+explosiveness = 0.64
+randomness = 1.0
+lifetime_randomness = 0.3
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 84.72
+initial_velocity_max = 84.72
+damping_min = 13.514
+damping_max = 14.189
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_5xabh")
+color_ramp = SubResource("Gradient_0sn5j")
+color_initial_ramp = SubResource("Gradient_0sn5j")

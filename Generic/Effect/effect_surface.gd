@@ -1,9 +1,7 @@
 class_name EffectSurface
 extends Area2D
 
-enum Type {
-	
-}
+var effect : Effect
 
 var points: PackedVector2Array
 var widths: Array[int] = [0]
@@ -27,7 +25,6 @@ func _init(color_: Color, point: Vector2, radius: int) -> void:
 	set_collision_mask_value(9, true)
 	
 	add_point(point, radius)
-
 	
 	area_entered.connect(absorb)
 
@@ -48,8 +45,6 @@ func absorb(o_surface: EffectSurface) -> void:
 		o_surface.remove_child(collider)
 		call_deferred("add_child", collider)
 	o_surface.queue_free()
-	
-	
 
 
 #func absorb(o_surface: EffectSurface) -> void:
