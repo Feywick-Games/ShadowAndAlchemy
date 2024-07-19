@@ -7,7 +7,7 @@ var image: Image
 var radius: int
 
 func _init(color_: Color, point: Vector2, radius_: int) -> void:
-	mesh.color = Color(1,0,0)
+	mesh.color = color_
 	mesh.set_visibility_layer_bit(0, false)
 	mesh.set_visibility_layer_bit(8, true)
 	add_child(mesh)

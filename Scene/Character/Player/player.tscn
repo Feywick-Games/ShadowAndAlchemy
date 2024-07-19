@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://5dadhjd3c84b"]
+[gd_scene load_steps=9 format=3 uid="uid://5dadhjd3c84b"]
 
 [ext_resource type="Script" path="res://Scene/Character/Player/_Script/player.gd" id="1_drnag"]
 [ext_resource type="Script" path="res://Scene/Character/Player/_Script/player_combat_state.gd" id="2_a60yp"]
@@ -6,6 +6,19 @@
 [ext_resource type="Script" path="res://Generic/Animation/directional_animator.gd" id="4_bvv1k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dlnrr"]
+
+[sub_resource type="Animation" id="Animation_o3opd"]
+resource_name = "move_down"
+
+[sub_resource type="Animation" id="Animation_ouxfy"]
+resource_name = "idle_down"
+length = 0.01
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_52fvt"]
+_data = {
+"idle_down": SubResource("Animation_ouxfy"),
+"move_down": SubResource("Animation_o3opd")
+}
 
 [node name="Player" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -16,21 +29,26 @@ init_state = ExtResource("2_a60yp")
 speed = 75.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(5, -2)
 texture = ExtResource("2_jh3q0")
+offset = Vector2(-5, -22)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -13)
 shape = SubResource("CapsuleShape2D_dlnrr")
 
 [node name="DirectionalAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_52fvt")
+}
 script = ExtResource("4_bvv1k")
 
 [node name="Footprint" type="ColorRect" parent="."]
 z_index = -8
 z_as_relative = false
-offset_left = -10.0
-offset_top = 20.0
-offset_right = 9.0
-offset_bottom = 29.0
+offset_left = -7.0
+offset_top = -6.0
+offset_right = 7.0
+offset_bottom = 4.0
 
 [node name="ParticlePosition" type="Node2D" parent="."]
-position = Vector2(0, 19)

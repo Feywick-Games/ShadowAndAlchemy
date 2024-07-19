@@ -19,6 +19,7 @@ script = ExtResource("1_vw0q2")
 force_scale = 3.0
 lifetime = 0.5
 create_surface = true
+effect_map_color = Color(0.0784314, 0, 0, 1)
 
 [node name="Blast" type="CPUParticles2D" parent="."]
 visible = false

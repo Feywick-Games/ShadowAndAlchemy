@@ -1,52 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj1kns8r4alw1"]
+[gd_scene load_steps=15 format=3 uid="uid://cj1kns8r4alw1"]
 
+[ext_resource type="Texture2D" uid="uid://3s1g5bmw00u2" path="res://Scene/Level/_Sprite/floor.png" id="1_5hoft"]
 [ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="1_ckvfe"]
+[ext_resource type="Material" uid="uid://fp4b8bi0u5it" path="res://Scene/Level/_Material/floor.material" id="1_hy87x"]
 [ext_resource type="Texture2D" uid="uid://bcdh7j2xjmlqf" path="res://Scene/Character/Mei/_Sprite/mei.png" id="2_0i3fu"]
 [ext_resource type="Script" path="res://Generic/Camera/tracking_camera.gd" id="3_dvrra"]
+[ext_resource type="Texture2D" uid="uid://de327rhr7qob7" path="res://Scene/Character/Enemy/Shadow/_Sprite/shadow_male.png" id="4_ivj2t"]
+[ext_resource type="Texture2D" uid="uid://xgp2exyw3y2q" path="res://Scene/Level/_Sprite/siren_statue.png" id="5_l08pv"]
+[ext_resource type="Texture2D" uid="uid://bbaeil3j4p0wv" path="res://Scene/Level/_Sprite/wooden_bench.png" id="6_eaaun"]
+[ext_resource type="Texture2D" uid="uid://bguq00jf30a05" path="res://Scene/Level/_Sprite/north_wall_1.png" id="7_yte1e"]
+[ext_resource type="Texture2D" uid="uid://lphr46whuvag" path="res://Scene/Level/_Sprite/wall_bathroom.png" id="8_pokty"]
+[ext_resource type="Texture2D" uid="uid://bjara37m2gabp" path="res://Scene/Level/_Sprite/wall_border_1.png" id="9_kgpre"]
+[ext_resource type="Texture2D" uid="uid://s4b7dne1nmv3" path="res://Scene/Level/_Sprite/east_wall_1.png" id="11_uitg8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_unskg"]
 size = Vector2(12, 11)
+
+[sub_resource type="Environment" id="Environment_ciao6"]
+background_mode = 1
+background_color = Color(0.188235, 0.133333, 0.180392, 1)
 
 [node name="Level" type="Node2D"]
 visibility_layer = 3
 y_sort_enabled = true
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-position = Vector2(320, 180)
+[node name="Floor" type="Sprite2D" parent="." groups=["floor"]]
+z_index = -2
+material = ExtResource("1_hy87x")
+texture = ExtResource("1_5hoft")
+centered = false
 
 [node name="EffectGroup" type="Node2D" parent="." groups=["effect_group"]]
 visibility_layer = 3
 position = Vector2(320, 180)
 
 [node name="Player" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(320, 180)
-
-[node name="Player2" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(406, 171)
-
-[node name="Player3" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(347, 238)
-
-[node name="Player4" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(170, 285)
-
-[node name="Player5" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(216, 204)
-
-[node name="Player6" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(333, 206)
-
-[node name="Player7" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(461, 250)
-
-[node name="Player8" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(420, 93)
-
-[node name="Player9" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(248, 114)
-
-[node name="Player10" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(139, 152)
+position = Vector2(416, 944)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 y_sort_enabled = true
@@ -58,8 +47,73 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_unskg")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(0, 688)
 texture = ExtResource("2_0i3fu")
 
+[node name="ShadowMale" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(80, 384)
+texture = ExtResource("4_ivj2t")
+
+[node name="ShadowMale2" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(192, 560)
+texture = ExtResource("4_ivj2t")
+
+[node name="ShadowMale3" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(-112, 560)
+texture = ExtResource("4_ivj2t")
+
+[node name="ShadowMale4" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(-208, 752)
+texture = ExtResource("4_ivj2t")
+
+[node name="ShadowMale5" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(-175, 312)
+texture = ExtResource("4_ivj2t")
+
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("leader")]
+position = Vector2(413, 894)
 script = ExtResource("3_dvrra")
 leader = NodePath("../Player")
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+z_index = -3
+z_as_relative = false
+custom_minimum_size = Vector2(640, 360)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.188235, 0.133333, 0.180392, 1)
+
+[node name="SirenStatue" type="Sprite2D" parent="."]
+position = Vector2(155, 947)
+texture = ExtResource("5_l08pv")
+
+[node name="WoodenBench" type="Sprite2D" parent="."]
+position = Vector2(106, 588)
+texture = ExtResource("6_eaaun")
+centered = false
+
+[node name="NorthWall1" type="Sprite2D" parent="."]
+position = Vector2(32, 720)
+texture = ExtResource("7_yte1e")
+centered = false
+
+[node name="WallBathroom" type="Sprite2D" parent="."]
+position = Vector2(0, 400)
+texture = ExtResource("8_pokty")
+centered = false
+
+[node name="WallBorder1" type="Sprite2D" parent="."]
+position = Vector2(0, 608)
+texture = ExtResource("9_kgpre")
+centered = false
+
+[node name="EastWall1" type="Sprite2D" parent="."]
+position = Vector2(784, 720)
+texture = ExtResource("11_uitg8")
+centered = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ciao6")

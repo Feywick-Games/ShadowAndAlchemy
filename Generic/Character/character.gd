@@ -22,11 +22,14 @@ func _process(delta: float) -> void:
 	global_position = global_position.round()
 
 
-func cast_effect(direction : Vector2, particles: EffectParticles) -> void:
+func cast_effect(direction : Vector2, particles: EffectParticles, terminate_signal: Signal = Signal()) -> void:
 	particles.position = $ParticlePosition.position.rotated(-direction.angle_to(Vector2.DOWN))
 	particles.global_position += global_position
 	get_parent().add_child(particles)
 	particles.cast(direction)
+	
+	if terminate_signal != Signal():
+		terminate_signal.connect(particles._on_impact.bind(null))
 
 
 func check_surfaces() -> void:
@@ -34,6 +37,3 @@ func check_surfaces() -> void:
 		for x: int in range(0, footprint.get_rect().size.x):
 			var pix := Vector2(x,y) + footprint.global_position
 			var pix_color: Color = GameState.effect_image.get_pixelv(pix)
-			
-			if pix_color.r > 0:
-				print("you on fire, homie!")

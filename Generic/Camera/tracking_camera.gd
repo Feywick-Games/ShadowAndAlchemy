@@ -7,7 +7,7 @@ var leader : Node2D
 @export_range(0,1)
 var lerp_speed: float = 5
 @export
-var max_speed: float = 1
+var max_speed: float = .5
 @onready
 var window_scale : Vector2
 
