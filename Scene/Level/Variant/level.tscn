@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj1kns8r4alw1"]
+[gd_scene load_steps=5 format=3 uid="uid://cj1kns8r4alw1"]
 
 [ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="1_ckvfe"]
 [ext_resource type="Texture2D" uid="uid://bcdh7j2xjmlqf" path="res://Scene/Character/Mei/_Sprite/mei.png" id="2_0i3fu"]
+[ext_resource type="Script" path="res://Generic/Camera/tracking_camera.gd" id="3_dvrra"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_unskg"]
 size = Vector2(12, 11)
@@ -11,15 +12,45 @@ visibility_layer = 3
 y_sort_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(320, 180)
 
 [node name="EffectGroup" type="Node2D" parent="." groups=["effect_group"]]
 visibility_layer = 3
+position = Vector2(320, 180)
 
 [node name="Player" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(320, 180)
+
+[node name="Player2" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(406, 171)
+
+[node name="Player3" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(347, 238)
+
+[node name="Player4" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(170, 285)
+
+[node name="Player5" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(216, 204)
+
+[node name="Player6" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(333, 206)
+
+[node name="Player7" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(461, 250)
+
+[node name="Player8" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(420, 93)
+
+[node name="Player9" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(248, 114)
+
+[node name="Player10" parent="." instance=ExtResource("1_ckvfe")]
+position = Vector2(139, 152)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 y_sort_enabled = true
-position = Vector2(0, 108)
+position = Vector2(320, 288)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -28,3 +59,7 @@ shape = SubResource("RectangleShape2D_unskg")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 texture = ExtResource("2_0i3fu")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("leader")]
+script = ExtResource("3_dvrra")
+leader = NodePath("../Player")

@@ -13,21 +13,28 @@ config_version=5
 config/name="Alchemy Gauntlet"
 run/main_scene="res://Scene/Game/game.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+run/max_fps=60
 
 [autoload]
 
 EventBus="*res://Generic/Autoload/event_bus.gd"
+GameState="*res://Generic/Autoload/game_state.gd"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=360
-window/size/mode=3
-window/stretch/mode="viewport"
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=4
+window/size/resizable=false
+window/size/borderless=true
+window/size/window_width_override=1920
+window/size/window_height_override=1080
+window/stretch/mode="canvas_items"
 
 [global_group]
 
 effect_group="Contains all effect particles and surfaces"
+effect_viewport=""
 
 [input]
 
@@ -53,7 +60,7 @@ move_down={
 }
 move_up={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":97,"location":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":119,"location":0,"echo":false,"script":null)
 ]
 }
 

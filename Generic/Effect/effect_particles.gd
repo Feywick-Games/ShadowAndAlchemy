@@ -15,6 +15,8 @@ var _hit_box_scale_curve: Curve2D
 @export_range(0,3.0)
 var lifetime: float = -1
 @export
+var has_impact := true
+@export
 var create_surface := false
 @export
 var surface_type : SurfaceType
@@ -42,7 +44,8 @@ func _ready() -> void:
 	_blast.emitting = true
 	set_collision_layer_value(1, true)
 	set_collision_mask_value(3, true)
-	body_entered.connect(_on_impact)
+	if has_impact:
+		body_entered.connect(_on_impact)
 	_blast.lifetime = lifetime
 	_offset = position
 	_blast.show()
@@ -68,6 +71,7 @@ func _physics_process(delta: float) -> void:
 			_circle_shape.radius += _hit_box_scale_curve.sample(int(floor(_hitbox_scale_index)), 0).y
 		
 		position += _force * force_scale
+		cast_effect_surface()
 		
 	_hitbox_scale_index += delta
 
@@ -75,22 +79,20 @@ func _physics_process(delta: float) -> void:
 func cast(cast_direction: Vector2) -> void:
 	_force = cast_direction
 	_blast.direction = cast_direction
-	position = _offset.rotated(-cast_direction.angle_to(Vector2.DOWN))
-	
-	
+
 
 func cast_effect_surface() -> void:
 	if not _active_surface:
 		_active_surface = EffectSurface.new(Color.AQUA, global_position, _circle_shape.radius)
 		get_tree().get_first_node_in_group("effect_group").add_child(_active_surface)
 	_active_surface.add_point(global_position, _circle_shape.radius)
-	_active_surface.queue_redraw()
-	
-	
+
+
 func _on_impact(body: PhysicsBody2D) -> void:
 	if _terminate_blast_on_impact:
 		_blast.hide()
 	if _impact:
 		_impact.emitting = true
 		await _impact.finished
+		_active_surface.queue_free()
 		queue_free()

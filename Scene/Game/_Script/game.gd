@@ -5,9 +5,11 @@ extends Node
 var surface_viewport : SubViewport = $SurfaceViewportContainer/SubViewport
 @onready
 var level_viewport: SubViewport = $LevelViewportContainer/SubViewport
+@onready
+var effect_map_viewport: SubViewport = %EffectMapViewport
 
 func _ready() -> void:
-	surface_viewport.world_2d = level_viewport.world_2d
+	effect_map_viewport.world_2d = level_viewport.world_2d
 
 
 func _process(delta: float) -> void:

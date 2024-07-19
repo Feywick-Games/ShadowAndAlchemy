@@ -13,6 +13,7 @@ collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_drnag")
 init_state = ExtResource("2_a60yp")
+speed = 75.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_jh3q0")
@@ -20,7 +21,16 @@ texture = ExtResource("2_jh3q0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_dlnrr")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="DirectionalAnimator" type="AnimationPlayer" parent="."]
 script = ExtResource("4_bvv1k")
+
+[node name="Footprint" type="ColorRect" parent="."]
+z_index = -8
+z_as_relative = false
+offset_left = -10.0
+offset_top = 20.0
+offset_right = 9.0
+offset_bottom = 29.0
+
+[node name="ParticlePosition" type="Node2D" parent="."]
+position = Vector2(0, 19)
