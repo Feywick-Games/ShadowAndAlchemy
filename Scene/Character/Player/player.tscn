@@ -7,12 +7,12 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dlnrr"]
 
-[sub_resource type="Animation" id="Animation_o3opd"]
-resource_name = "move_down"
-
 [sub_resource type="Animation" id="Animation_ouxfy"]
 resource_name = "idle_down"
 length = 0.01
+
+[sub_resource type="Animation" id="Animation_o3opd"]
+resource_name = "move_down"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_52fvt"]
 _data = {
@@ -29,9 +29,8 @@ init_state = ExtResource("2_a60yp")
 speed = 75.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(5, -2)
 texture = ExtResource("2_jh3q0")
-offset = Vector2(-5, -22)
+offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -13)

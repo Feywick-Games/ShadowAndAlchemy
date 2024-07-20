@@ -1,11 +1,6 @@
 class_name EffectParticles
 extends Area2D
 
-enum SurfaceType {
-	FIRE,
-	WATER
-}
-
 @export_range(0, 255)
 var force_scale: float
 @export
@@ -17,11 +12,13 @@ var lifetime: float = -1
 @export
 var create_surface := false
 @export
-var surface_type: SurfaceType
-@export
 var effect_map_color: Color
 @export
 var scale_time : float = 1
+@export
+var stationary_particles := false
+@export
+var scale_emission:= false
 
 
 var _initial_lifetime: float
@@ -56,6 +53,10 @@ func _ready() -> void:
 	#_blast.lifetime = lifetime
 	_offset = position
 	_blast.show()
+	
+	if stationary_particles:
+		remove_child(_blast)
+		get_parent().add_child(_blast, true)
 		
 
 func _process(delta: float) -> void:
@@ -72,10 +73,13 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if _blast.visible:
 		if _hit_box_scale_curve:
-			_circle_shape.radius = _hit_box_scale_curve.sample(_hitbox_scale_index * scale_time)
+			_circle_shape.radius = _hit_box_scale_curve.sample(_hitbox_scale_index * (1 / scale_time))
+		if scale_emission:
+			_blast.emission_sphere_radius = _circle_shape.radius
 		
 		position += _force * force_scale
-		cast_effect_surface(effect_map_color)
+		if create_surface:
+			cast_effect_surface(effect_map_color)
 		
 	_hitbox_scale_index += delta
 
@@ -99,4 +103,6 @@ func _on_impact(body: PhysicsBody2D) -> void:
 		_impact.emitting = true
 		await _impact.finished
 		_active_surface.queue_free()
+		queue_free()
+	else:
 		queue_free()

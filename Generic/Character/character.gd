@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 
 
 func cast_effect(direction : Vector2, particles: EffectParticles, terminate_signal: Signal = Signal()) -> void:
-	particles.position = $ParticlePosition.position.rotated(-direction.angle_to(Vector2.DOWN))
+	particles.position = particles.position.rotated(-direction.angle_to(Vector2.DOWN))
 	particles.global_position += global_position
 	get_parent().add_child(particles)
 	particles.cast(direction)

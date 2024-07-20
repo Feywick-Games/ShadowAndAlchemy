@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cj1kns8r4alw1"]
+[gd_scene load_steps=21 format=3 uid="uid://cj1kns8r4alw1"]
 
 [ext_resource type="Texture2D" uid="uid://3s1g5bmw00u2" path="res://Scene/Level/_Sprite/floor.png" id="1_5hoft"]
 [ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="1_ckvfe"]
@@ -7,14 +7,29 @@
 [ext_resource type="Script" path="res://Generic/Camera/tracking_camera.gd" id="3_dvrra"]
 [ext_resource type="Texture2D" uid="uid://de327rhr7qob7" path="res://Scene/Character/Enemy/Shadow/_Sprite/shadow_male.png" id="4_ivj2t"]
 [ext_resource type="Texture2D" uid="uid://xgp2exyw3y2q" path="res://Scene/Level/_Sprite/siren_statue.png" id="5_l08pv"]
+[ext_resource type="Script" path="res://Generic/Character/character.gd" id="5_pcfjh"]
+[ext_resource type="Script" path="res://StateMachine/state.gd" id="6_8io4k"]
 [ext_resource type="Texture2D" uid="uid://bbaeil3j4p0wv" path="res://Scene/Level/_Sprite/wooden_bench.png" id="6_eaaun"]
 [ext_resource type="Texture2D" uid="uid://bguq00jf30a05" path="res://Scene/Level/_Sprite/north_wall_1.png" id="7_yte1e"]
 [ext_resource type="Texture2D" uid="uid://lphr46whuvag" path="res://Scene/Level/_Sprite/wall_bathroom.png" id="8_pokty"]
+[ext_resource type="Script" path="res://Generic/Animation/directional_animator.gd" id="8_vvltr"]
 [ext_resource type="Texture2D" uid="uid://bjara37m2gabp" path="res://Scene/Level/_Sprite/wall_border_1.png" id="9_kgpre"]
 [ext_resource type="Texture2D" uid="uid://s4b7dne1nmv3" path="res://Scene/Level/_Sprite/east_wall_1.png" id="11_uitg8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_unskg"]
-size = Vector2(12, 11)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_70c21"]
+
+[sub_resource type="Animation" id="Animation_ouxfy"]
+resource_name = "idle_down"
+length = 0.01
+
+[sub_resource type="Animation" id="Animation_o3opd"]
+resource_name = "move_down"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_52fvt"]
+_data = {
+"idle_down": SubResource("Animation_ouxfy"),
+"move_down": SubResource("Animation_o3opd")
+}
 
 [sub_resource type="Environment" id="Environment_ciao6"]
 background_mode = 1
@@ -32,46 +47,63 @@ centered = false
 
 [node name="EffectGroup" type="Node2D" parent="." groups=["effect_group"]]
 visibility_layer = 3
-position = Vector2(320, 180)
 
 [node name="Player" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(416, 944)
+position = Vector2(958, 474)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="ShadowMale" type="Sprite2D" parent="."]
+position = Vector2(400, 672)
+texture = ExtResource("4_ivj2t")
+
+[node name="ShadowMale2" type="Sprite2D" parent="."]
+position = Vector2(512, 848)
+texture = ExtResource("4_ivj2t")
+
+[node name="ShadowMale3" type="Sprite2D" parent="."]
+position = Vector2(208, 848)
+texture = ExtResource("4_ivj2t")
+
+[node name="ShadowMale4" type="Sprite2D" parent="."]
+position = Vector2(112, 1040)
+texture = ExtResource("4_ivj2t")
+
+[node name="ShadowMale5" type="Sprite2D" parent="."]
+position = Vector2(145, 600)
+texture = ExtResource("4_ivj2t")
+
+[node name="StaticBody2D" type="CharacterBody2D" parent="."]
 y_sort_enabled = true
-position = Vector2(320, 288)
+position = Vector2(371, 1000)
 collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_unskg")
+script = ExtResource("5_pcfjh")
+init_state = ExtResource("6_8io4k")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(0, 688)
+position = Vector2(0, -24)
 texture = ExtResource("2_0i3fu")
 
-[node name="ShadowMale" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(80, 384)
-texture = ExtResource("4_ivj2t")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -14)
+shape = SubResource("CapsuleShape2D_70c21")
 
-[node name="ShadowMale2" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(192, 560)
-texture = ExtResource("4_ivj2t")
+[node name="DirectionalAnimator" type="AnimationPlayer" parent="StaticBody2D"]
+libraries = {
+"": SubResource("AnimationLibrary_52fvt")
+}
+script = ExtResource("8_vvltr")
 
-[node name="ShadowMale3" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-112, 560)
-texture = ExtResource("4_ivj2t")
+[node name="Footprint" type="ColorRect" parent="StaticBody2D"]
+z_index = -8
+z_as_relative = false
+offset_left = -7.0
+offset_top = -6.0
+offset_right = 7.0
+offset_bottom = 4.0
 
-[node name="ShadowMale4" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-208, 752)
-texture = ExtResource("4_ivj2t")
-
-[node name="ShadowMale5" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-175, 312)
-texture = ExtResource("4_ivj2t")
+[node name="ParticlePosition" type="Node2D" parent="StaticBody2D"]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("leader")]
-position = Vector2(413, 894)
+position = Vector2(955, 467)
 script = ExtResource("3_dvrra")
 leader = NodePath("../Player")
 
@@ -82,6 +114,10 @@ custom_minimum_size = Vector2(640, 360)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 338.0
+offset_top = -592.0
+offset_right = 978.0
+offset_bottom = -232.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.188235, 0.133333, 0.180392, 1)

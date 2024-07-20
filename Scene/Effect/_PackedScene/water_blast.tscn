@@ -1,4 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://csdb4iy25beuv"]
+[gd_scene load_steps=7 format=3 uid="uid://csdb4iy25beuv"]
+
+[ext_resource type="Script" path="res://Generic/Effect/effect_particles.gd" id="1_vu1dd"]
+
+[sub_resource type="Curve" id="Curve_3m2qt"]
+min_value = 16.0
+max_value = 48.0
+_data = [Vector2(0, 16), 0.0, 44.8, 0, 0, Vector2(1, 48), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="Curve" id="Curve_5xabh"]
 _data = [Vector2(0.0144928, 1), 0.0, 0.150663, 0, 0, Vector2(0.960145, 0), 0.0264191, 0.0, 0, 0]
@@ -6,22 +14,75 @@ point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_0sn5j"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.375)
-colors = PackedColorArray(0.384314, 0.568627, 0.721569, 1, 0.670588, 0.815686, 0.878431, 1)
+offsets = PackedFloat32Array(0.079646, 0.327434)
+colors = PackedColorArray(0.462745, 0.670588, 0.819608, 1, 0.984314, 0.984314, 0.945098, 1)
 
-[node name="WaterBlast" type="CPUParticles2D"]
+[sub_resource type="Curve" id="Curve_wp7hv"]
+max_value = 100.0
+_data = [Vector2(0, 0), 0.0, 140.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_geb4b"]
+radius = 18.0
+
+[node name="WaterBlast" type="Area2D"]
+y_sort_enabled = true
+position = Vector2(0, 25)
+collision_layer = 0
+collision_mask = 5
+gravity = 0.0
+script = ExtResource("1_vu1dd")
+force_scale = 5.0
+_hit_box_scale_curve = SubResource("Curve_3m2qt")
+lifetime = 0.6
+create_surface = true
+effect_map_color = Color(0.0784314, 0, 0, 1)
+scale_emission = true
+
+[node name="Blast" type="CPUParticles2D" parent="."]
 position = Vector2(1, 0)
-amount = 256
-explosiveness = 0.64
-randomness = 1.0
-lifetime_randomness = 0.3
-direction = Vector2(0, -1)
+amount = 512
+lifetime = 0.5
+randomness = 0.3
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 21.95
+particle_flag_align_y = true
+direction = Vector2(0, 1)
+spread = 73.65
 gravity = Vector2(0, 0)
-initial_velocity_min = 84.72
-initial_velocity_max = 84.72
-damping_min = 13.514
-damping_max = 14.189
-scale_amount_max = 4.0
+initial_velocity_min = 20.0
+initial_velocity_max = 100.0
+orbit_velocity_min = -1.0
+orbit_velocity_max = 1.0
+radial_accel_max = 20.0
+scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_5xabh")
 color_ramp = SubResource("Gradient_0sn5j")
-color_initial_ramp = SubResource("Gradient_0sn5j")
+
+[node name="Impact" type="CPUParticles2D" parent="."]
+visible = false
+amount = 256
+lifetime = 0.5
+explosiveness = 1.0
+fixed_fps = 30
+draw_order = 1
+emission_shape = 1
+emission_sphere_radius = 32.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 63.23
+initial_velocity_max = 63.23
+damping_curve = SubResource("Curve_wp7hv")
+color_ramp = SubResource("Gradient_0sn5j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_geb4b")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_geb4b")
