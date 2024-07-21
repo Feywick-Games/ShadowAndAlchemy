@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dld3hutqr8bjm"]
 
-[ext_resource type="Script" path="res://Generic/Effect/effect_particles.gd" id="1_vw0q2"]
+[ext_resource type="Script" path="res://Generic/Effect/wind_blast.gd" id="1_8p1w7"]
 
 [sub_resource type="Curve" id="Curve_jvy10"]
 max_value = 100.0
@@ -8,16 +8,16 @@ _data = [Vector2(0, 0), 0.0, 140.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ip5k"]
-radius = 18.0
+radius = 32.0
 
 [node name="WindBlast" type="Area2D"]
 y_sort_enabled = true
 position = Vector2(0, 25)
 collision_layer = 0
 collision_mask = 5
-script = ExtResource("1_vw0q2")
+script = ExtResource("1_8p1w7")
 force_scale = 3.0
-lifetime = 0.5
+lifetime = 1.0
 create_surface = true
 effect_map_color = Color(0.0784314, 0, 0, 1)
 

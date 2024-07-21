@@ -28,7 +28,6 @@ func _init(radius_: int, width_: int) -> void:
 	assert(width > 1)
 	build_circle(radius)
 	queue_redraw()
-	add_to_group("lines")
 	segments = [points]
 
 
@@ -41,7 +40,6 @@ func _process(delta: float) -> void:
 	width_delta = (width * delta * 40)
 	radius = radius + width_delta
 
-	print(Time.get_ticks_usec(), " line.gd")
 	if terminating:
 		queue_free()
 	
@@ -53,7 +51,7 @@ func _process(delta: float) -> void:
 		var new_points: Array[Vector2]
 		for i: int in range(len(points)):
 			var point : Vector2 = points[i]
-			if Rect2(0,0, 1920, 1080).has_point(point + global_position):
+			if Rect2(Vector2.ZERO, GameState.level_size).has_point(point + global_position):
 				var pixel_position := point + global_position
 				var pix : Color = GameState.effect_image.get_pixelv(pixel_position)
 				
@@ -64,7 +62,7 @@ func _process(delta: float) -> void:
 					o_point = last_frame_points[i]
 					o_pixel_position = o_point + global_position
 					
-					if Rect2(0,0, 1920, 1080).has_point(o_pixel_position):
+					if Rect2(Vector2.ZERO, GameState.level_size).has_point(o_pixel_position):
 						var o_pix =  GameState.reaction_image.get_pixelv(o_pixel_position)
 						
 						if abs(o_pix.g - green_id) < .01 or not drawn_init:
@@ -74,7 +72,7 @@ func _process(delta: float) -> void:
 						o_point = last_frame_points[i - 1]
 						o_pixel_position = o_point + global_position
 						
-						if Rect2(0,0, 1920, 1080).has_point(o_pixel_position):
+						if Rect2(Vector2.ZERO, GameState.level_size).has_point(o_pixel_position):
 							var o_pix =  GameState.reaction_image.get_pixelv(o_pixel_position)
 							
 							if abs(o_pix.g - green_id) < .01 or not drawn_init:
@@ -84,7 +82,7 @@ func _process(delta: float) -> void:
 						o_point = last_frame_points[i + 1]
 						o_pixel_position = o_point + global_position
 						
-						if Rect2(0,0, 1920, 1080).has_point(o_pixel_position):
+						if Rect2(Vector2.ZERO, GameState.level_size).has_point(o_pixel_position):
 							var o_pix =  GameState.reaction_image.get_pixelv(o_pixel_position)
 							
 							if abs(o_pix.g - green_id) < .01 or not drawn_init:

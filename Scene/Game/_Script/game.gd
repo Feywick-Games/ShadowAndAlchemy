@@ -18,9 +18,6 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	var line = get_tree().get_first_node_in_group("lines")
-	if line:
-		print(Time.get_ticks_usec(), " Game.gd")
 	surface_viewport.get_camera_2d().global_position  = level_viewport.get_camera_2d().global_position
 	reaction_track_viewport.get_camera_2d().global_position = level_viewport.get_camera_2d().global_position
 	RenderingServer.global_shader_parameter_set("effect_map", effect_map_viewport.get_texture())

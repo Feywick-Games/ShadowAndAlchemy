@@ -8,9 +8,6 @@ var terminate := false
 var has_cleaned_up := false
 
 func _ready() -> void:
-	var sub_mat := CanvasItemMaterial.new()
-	sub_mat.blend_mode = CanvasItemMaterial.BLEND_MODE_SUB
-	material = sub_mat
 	set_visibility_layer_bit(0, false)
 	set_visibility_layer_bit(8, true)
 
