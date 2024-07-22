@@ -40,16 +40,16 @@ func _process(delta: float) -> void:
 		last_frame_segments = segments.duplicate()
 		
 		if not last_frame_segments.is_empty():
-			segments = find_segments(Geometry.generate_arc(radius, MIN_PUDDLE_DIAMETER), last_frame_segments, radius, radius - last_radius, MIN_PUDDLE_DIAMETER + 1)
+			segments = find_segments(Geometry.generate_arc(radius, MIN_PUDDLE_DIAMETER), last_frame_segments, radius, radius - last_radius,1)
 		else:
 			for i: int in range(MIN_PUDDLE_DIAMETER + 1, radius):
 				var previous_segments: Array[PackedVector2Array] = [Geometry.generate_arc(i - 1, 1)]
 				var circle_points: PackedVector2Array = Geometry.generate_arc(i, 1)
-				segments = find_segments(circle_points, previous_segments, i, 1, 4)
+				segments = find_segments(circle_points, previous_segments, i, 1, 1)
 				
 				radius = i
 				
-				if segments != null:
+				if segments.is_empty():
 					break
 
 		last_radius = radius
@@ -59,67 +59,17 @@ func _process(delta: float) -> void:
 
 
 func find_segments(circle_points: PackedVector2Array, previous_points: Array[PackedVector2Array], current_radius: float, width_delta: float, break_width: int) -> Array[PackedVector2Array]:
+	var start_ends: Array[Vector2i] = split_arc(circle_points, break_width)
 	
-	var start_ends : Array[Vector2i] = [-Vector2i.ONE]
-		
-	var found_points: int = 0
-	var started_in_water := false
-	var last_point_water := false
-	var first_exit: int
-	
-	for i: int in range(0, len(circle_points), 1):
-		var pixel_position := circle_points[i] + global_position
-		var pix: Color
-		
-		if Rect2(Vector2.ZERO, GameState.level_size).has_point(pixel_position):
-			pix = GameState.effect_image.get_pixelv(pixel_position)
-		else:
-			pix = Color.BLACK
-		# grab the last empty position or the current if index is 0
-		if pix.r > 0 && pix.r <= Globals.WATER_EFFECT_MASK:
-			found_points += 1
-			last_point_water = true
-			
-			if i == 0:
-				started_in_water = true
-
-			if i == len(circle_points) - 1 and started_in_water:
-				if not start_ends.is_empty():
-					start_ends[len(start_ends) - 1].x = first_exit
-		else:
-			# is non first start point
-			if start_ends[len(start_ends) - 1].x == -1:
-				if start_ends.size() == 1 and started_in_water:
-					first_exit = i
-				start_ends[len(start_ends) - 1].x = i
-			# replace start if consecutive open spaces
-			elif not last_point_water and i < len(circle_points) - 1:
-				start_ends[len(start_ends) - 1].x =  i
-			# is an end point
-			else:
-				start_ends[len(start_ends) - 1].y = i
-				start_ends.append(Vector2i(-1,-1))
-			
-			last_point_water = false
-	
-	
-	if found_points == len(circle_points):
-		start_ends = [Vector2i(0, circle_points.size() - 1)]
-	
-	if start_ends[len(start_ends) - 1].x == -1 or start_ends[len(start_ends) - 1].y == -1:
-		start_ends.pop_back()
-	
-	# begin exit state if no segements found
-	if (start_ends.is_empty()):
+	if start_ends.is_empty():
 		return []
-	
 	else:
 		var new_segments: Array[PackedVector2Array]
 		
 		for start_end in start_ends:
 			
 			var new_segment: PackedVector2Array 
-			
+	
 			if abs(len(circle_points) - 1 - start_end.y) <= MIN_PUDDLE_DIAMETER:
 				new_segment = circle_points.slice(start_end.x)
 				new_segment.append(circle_points[0])
@@ -131,77 +81,90 @@ func find_segments(circle_points: PackedVector2Array, previous_points: Array[Pac
 			
 			if new_segment.size() == 1:
 				continue
-			
-			var missed_points: int = 0
-			# TODO change to Array[Vector2i]
-			var segment_indices: Array[PackedInt32Array] = [PackedInt32Array([-1,-1])]
-			
-			for i: int in range(0,len(new_segment)):
-				var point := new_segment[i]
-			
-				var pixel_position := point + global_position
-				var pix : Color
-				if Rect2(Vector2.ZERO, GameState.level_size).has_point(point + global_position):
-					pix = GameState.effect_image.get_pixelv(pixel_position)
-				else:
-					pix = Color.BLACK
 				
-				if pix.r > 0 && pix.r <= .1:
-					# if not existing start
-					if segment_indices[len(segment_indices) - 1][0] == -1:
-						segment_indices[len(segment_indices) - 1][0] = i
-					# if no existing end
-					if segment_indices[len(segment_indices) - 1][1] == -1:
-						segment_indices[len(segment_indices) - 1][1] = i
-					# update end
-					else:
-						segment_indices[len(segment_indices) - 1][1] = i
-				else:
-					# increment invalid count
-					missed_points += 1
-					# if too many invalid the segment count is incremented
-					if missed_points == break_width:
-						if not segment_indices[len(segment_indices) - 1][0] == -1:
-							# reset invalid count
-							missed_points = 0
-							segment_indices.append(PackedInt32Array([-1,-1]))
+			new_segments.append(new_segment)
 		
-			if segment_indices[len(segment_indices) - 1].is_empty():
-				segment_indices.pop_back()
-			
-			# exclude single point segments
-			if segment_indices.is_empty():
-				continue
-			
-			var found_segments: Array[PackedVector2Array] 
-			for indices in segment_indices:
-				found_segments.append(new_segment.slice(indices[0], indices[1]))
-						
+		var valid_segments: Array[PackedVector2Array]
 			# if a single pixel connects then the whole segment is validated
-			for found_segment in found_segments:
-				var is_validated := false
-				for point: Vector2 in found_segment:
-					
-					for o_segment in previous_points:
-						for o_point in o_segment:
-							var dist: float = o_point.distance_to(point)
-						
-
-							if dist <= width_delta + 1:
-								is_validated = true
-								break
-						if is_validated:
-							break
-					if is_validated:
-						break
-				
-				if is_validated:
-					new_segments.append(found_segment)
-				else:
-					print("test")
+		for found_segment in new_segments:
+			if is_valid_segment(found_segment, previous_points, width_delta):
+				valid_segments.append(found_segment)
+			else:
+				print("test")
 			
-		return new_segments
+		return valid_segments
 
+
+func split_arc(circle_points: PackedVector2Array, break_width: int, inside:=true, resolution:= 1) -> Array[Vector2i]:
+	var start_ends : Array[Vector2i] = [-Vector2i.ONE]
+		
+	var found_points: int = 0
+	var started_filtered := false
+	var last_point_filtered := false
+	var first_exit: int
+	var index_offset: int = 1
+	
+	if inside:
+		index_offset = 1
+
+	for i: int in range(0, len(circle_points), resolution):
+		var pixel_position := circle_points[i] + global_position
+		var pix: Color
+		
+		if Rect2(Vector2.ZERO, GameState.level_size).has_point(pixel_position):
+			pix = GameState.effect_image.get_pixelv(pixel_position)
+		else:
+			pix = Color.BLACK
+		# grab the last empty position or the current if index is 0
+		if pix.r > 0 && pix.r <= Globals.WATER_EFFECT_MASK:
+			found_points += 1
+			last_point_filtered = true
+			
+			if i == 0:
+				started_filtered = true
+
+			if i == len(circle_points) - 1 and started_filtered:
+				if not start_ends.is_empty():
+					start_ends[len(start_ends) - 1].x = first_exit
+		else:
+			# is non first start point
+			if start_ends[len(start_ends) - 1].x == -1:
+				if start_ends.size() == 1 and started_filtered:
+					first_exit = i
+				start_ends[len(start_ends) - 1].x = i + index_offset
+			# replace start if consecutive open spaces
+			elif not last_point_filtered and i < len(circle_points) - 1:
+				start_ends[len(start_ends) - 1].x =  i + index_offset
+			# is an end point
+			else:
+				start_ends[len(start_ends) - 1].y = i - index_offset
+				start_ends.append(Vector2i(-1,-1))
+			
+			last_point_filtered = false
+
+	if found_points == len(range(0, len(circle_points), resolution)):
+		start_ends = [Vector2i(0, circle_points.size() - 1)]
+	
+	if start_ends[len(start_ends) - 1].x == -1 or start_ends[len(start_ends) - 1].y == -1:
+		start_ends.pop_back()
+	
+	# begin exit state if no segements found
+	if (start_ends.is_empty()):
+		return []
+	
+	return start_ends
+
+
+func is_valid_segment(found_segment: PackedVector2Array, previous_points: Array[PackedVector2Array], width_delta: float) -> bool:
+	
+	for point: Vector2 in found_segment:
+		for o_segment: PackedVector2Array in previous_points:
+			for o_point: Vector2 in o_segment:
+				var dist: float = o_point.distance_to(point)
+				if dist <= width_delta + 1:
+					return true
+
+	return false
 
 func slice_segment(segment: PackedVector2Array, output: ) -> Array[PackedVector2Array]:
 	return PackedVector2Array()
