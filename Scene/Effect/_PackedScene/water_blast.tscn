@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://Generic/Effect/effect_particles.gd" id="1_vu1dd"]
 
 [sub_resource type="Curve" id="Curve_3m2qt"]
-min_value = 16.0
-max_value = 48.0
+min_value = 4.0
+max_value = 8.0
 _data = [Vector2(0, 16), 0.0, 44.8, 0, 0, Vector2(1, 48), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -23,6 +23,7 @@ _data = [Vector2(0, 0), 0.0, 140.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_geb4b"]
+resource_local_to_scene = true
 radius = 18.0
 
 [node name="WaterBlast" type="Area2D"]

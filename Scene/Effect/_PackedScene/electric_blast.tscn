@@ -1,6 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7oqfdrx75m02"]
+[gd_scene load_steps=8 format=3 uid="uid://c7oqfdrx75m02"]
 
 [ext_resource type="Script" path="res://Generic/Effect/electric_blast.gd" id="1_ahan5"]
+
+[sub_resource type="Curve" id="Curve_kp5eq"]
+min_value = 22.0
+max_value = 50.0
+_data = [Vector2(0, 22), 0.0, 39.2, 0, 0, Vector2(1, 50), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="Curve" id="Curve_2y1md"]
 min_value = -1.0
@@ -22,10 +28,12 @@ offsets = PackedFloat32Array(0.0929204, 0.836283)
 colors = PackedColorArray(0.85098, 0.752941, 0.368627, 1, 0.984314, 0.984314, 0.945098, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vccqe"]
-radius = 50.2494
+resource_local_to_scene = true
+radius = 22.0
 
 [node name="EffectParticles" type="Area2D"]
 script = ExtResource("1_ahan5")
+_hit_box_scale_curve = SubResource("Curve_kp5eq")
 lifetime = 1.0
 scale_emission = true
 

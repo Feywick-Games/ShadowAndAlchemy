@@ -25,6 +25,7 @@ script = ExtResource("1_2c1r1")
 blast_color_ramp = SubResource("Gradient_5nyys")
 _hit_box_scale_curve = SubResource("Curve_81kiw")
 create_surface = true
+effect_map_color = Color(0, 0, 1, 1)
 scale_time = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

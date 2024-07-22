@@ -120,13 +120,17 @@ water_effect_mask={
 }
 effect_map={
 "type": "sampler2D",
-"value": ""
+"value": "res://Meta/global_sampler_override.png"
 }
 reaction_map={
 "type": "sampler2D",
-"value": ""
+"value": "res://Meta/global_sampler_override.png"
 }
 fire_effect_mask={
 "type": "float",
 "value": 0.2
+}
+level_size={
+"type": "vec2",
+"value": Vector2(1920, 1080)
 }

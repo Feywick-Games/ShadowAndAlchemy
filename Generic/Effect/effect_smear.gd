@@ -6,8 +6,6 @@ var uvs: PackedVector2Array
 var last_frame_points: PackedVector2Array
 var last_radius: int
 var colors: Array[Color]
-var sub_surface : Polygon2D
-
 
 
 func add_point(point: Vector2, radius_: int) -> void:
@@ -44,16 +42,6 @@ func build_circle(radius_: int) -> void:
 		if (global_position - last_position).dot(point) > 0:
 			uv -= (global_position - last_position) / GameState.level_size * radius
 		uvs.append(uv)
-	if not sub_surface:
-		sub_surface = Polygon2D.new()
-		sub_surface.color = Color.BLACK
-		add_child(sub_surface)
-		sub_surface.set_visibility_layer_bit(8, true);
-		sub_surface.set_visibility_layer_bit(1,false)
-		
-	sub_surface.polygon = points
-	#sub_surface.uv = uvs
-	#sub_surface.texture = GameState._effect_viewport.get_texture()
 
 
 
