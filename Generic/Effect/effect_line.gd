@@ -32,7 +32,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	radius = radius + (width * delta * 15)
-
+		
 	if terminating:
 		queue_free()
 	

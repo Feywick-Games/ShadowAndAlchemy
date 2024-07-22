@@ -48,6 +48,26 @@ render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="ReactionViewportContainer/SubViewport"]
 
+[node name="LevelViewportContainer" type="SubViewportContainer" parent="."]
+custom_minimum_size = Vector2(640, 360)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SubViewport" type="SubViewport" parent="LevelViewportContainer"]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+canvas_item_default_texture_filter = 0
+canvas_cull_mask = 4294966527
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Level" parent="LevelViewportContainer/SubViewport" instance=ExtResource("2_ksffh")]
+
 [node name="SurfaceViewportContainer" type="SubViewportContainer" parent="."]
 custom_minimum_size = Vector2(640, 360)
 anchors_preset = 15
@@ -87,23 +107,3 @@ render_target_clear_mode = 1
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="SurfaceViewportContainer/SubViewport"]
-
-[node name="LevelViewportContainer" type="SubViewportContainer" parent="."]
-custom_minimum_size = Vector2(640, 360)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="SubViewport" type="SubViewport" parent="LevelViewportContainer"]
-handle_input_locally = false
-snap_2d_transforms_to_pixel = true
-canvas_item_default_texture_filter = 0
-canvas_cull_mask = 4294966527
-size = Vector2i(640, 360)
-render_target_update_mode = 4
-
-[node name="Level" parent="LevelViewportContainer/SubViewport" instance=ExtResource("2_ksffh")]

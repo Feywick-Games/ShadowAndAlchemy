@@ -16,8 +16,9 @@ position = Vector2(0, 25)
 collision_layer = 0
 collision_mask = 5
 script = ExtResource("1_8p1w7")
-force_scale = 3.0
-lifetime = 1.0
+force_scale = 2.5
+_terminate_blast_on_impact = false
+lifetime = 2.0
 create_surface = true
 effect_map_color = Color(0.0784314, 0, 0, 1)
 

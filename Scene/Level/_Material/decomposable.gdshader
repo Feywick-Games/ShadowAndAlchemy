@@ -13,7 +13,7 @@ void fragment() {
 	vec2 world_uv = global_position / level_size;
 	vec2 world_pixel_size = 1.0 / level_size;
 	vec4 d_col = texture(effect_map, world_uv);
-	
+
 	vec4 d_col_1 = texture(effect_map, world_uv + (world_pixel_size * vec2(1,1)));
 	vec4 d_col_2 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,1)));
 	vec4 d_col_3 = texture(effect_map, world_uv + (world_pixel_size * vec2(1,0)));
@@ -55,8 +55,8 @@ void fragment() {
 		d_col_11.b > 0.0 ||
 		d_col_12.b > 0.0
 	);
-	
-	
+
+
 	if (d_col.b > 0.0) {
 		COLOR = vec4(0);
 	}
@@ -76,39 +76,39 @@ void fragment() {
 	{
 		COLOR = col_10;
 	}
-	else if (d_col_9.b > 0.0) 
+	else if (d_col_9.b > 0.0)
 	{
 		COLOR = col_9;
 	}
-	else if (d_col_8.b > 0.0) 
+	else if (d_col_8.b > 0.0)
 	{
 		COLOR = col_8;
 	}
-	else if (d_col_7.b > 0.0) 
+	else if (d_col_7.b > 0.0)
 	{
 		COLOR = col_7;
 	}
-	else if (d_col_6.b > 0.0) 
+	else if (d_col_6.b > 0.0)
 	{
 		COLOR = col_6;
 	}
-	else if (d_col_5.b > 0.0) 
+	else if (d_col_5.b > 0.0)
 	{
 		COLOR = col_5;
 	}
-	else if (d_col_4.b > 0.0) 
+	else if (d_col_4.b > 0.0)
 	{
 		COLOR = col_4;
 	}
-	else if (d_col_3.b > 0.0) 
+	else if (d_col_3.b > 0.0)
 	{
 		COLOR = col_3;
 	}
-	else if (d_col_2.b > 0.0) 
+	else if (d_col_2.b > 0.0)
 	{
 		COLOR = col_2;
 	}
-	else if (d_col_1.b > 0.0) 
+	else if (d_col_1.b > 0.0)
 	{
 		COLOR = col_1;
 	}
