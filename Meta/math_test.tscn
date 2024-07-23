@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://b54twe4syxdfp"]
+
+[ext_resource type="Script" path="res://Meta/math_test.gd" id="1_n5vvf"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bsrxi"]
+blend_mode = 1
+
+[node name="Node2D" type="Node2D"]
+material = SubResource("CanvasItemMaterial_bsrxi")
+position = Vector2(293, 185)
+script = ExtResource("1_n5vvf")
+metadata/_edit_horizontal_guides_ = [-62.0]
+
+[node name="PolygonB" type="Polygon2D" parent="."]
+position = Vector2(-81, -113)
+polygon = PackedVector2Array(27, -52, 24, -91, -40, -71, -5, -6)
+
+[node name="PolygonA" type="Polygon2D" parent="."]
+position = Vector2(-84, -125)
+polygon = PackedVector2Array(23, -9, 23, -55, -23, -55, -23, -10)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-165, -77)
+color = Color(0.577008, 0.577008, 0.577008, 1)
+polygon = PackedVector2Array(30, 12, 30, -12, 12, -30, -12, -30, -30, -12, -30, 12, -12, 30, 12, 30)

@@ -170,6 +170,10 @@ centered = false
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Decomposable"]
 polygon = PackedVector2Array(105, 944, 105, 898, 214, 897, 214, 944)
 
+[node name="Area2D" type="Area2D" parent="Decomposable"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Decomposable/Area2D"]
+
 [node name="WoodenBench" type="Sprite2D" parent="."]
 position = Vector2(106, 588)
 texture = ExtResource("6_eaaun")

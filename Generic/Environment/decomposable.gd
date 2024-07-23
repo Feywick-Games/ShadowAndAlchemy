@@ -1,53 +1,45 @@
 class_name Decomposable
 extends RigidBody2D
 
+var collision_polygons: Array[CollisionPolygon2D]
+var overlapping_areas: Array[Area2D]
+var collision_points: Array[Vector2]
+var collision_origins: Array[Vector2]
+var raycasts: Array[RayCast2D]
+
 @onready
-var collision_polygon : CollisionPolygon2D = $CollisionPolygon2D
-
-# if polygon point count is 1 queue free
-#
-#func disintegrate(origin: Vector2, radius: int) -> void:
-	#var segments: Array[Array]
-	#var o_points := build_circle(radius)
-	#build_circle(radius)
-	#
-	#segments.append(PackedVector2Array())
-	#var new_points: Array[Vector2]
-	#for i: int in range(len(collision_polygon.polygon)):
-		#var point : Vector2 = collision_polygon.polygon[i] + global_position
-		#
-		#for j: int in range(len(o_points)):
-			#
-			#var o_point: Vector2 = o_points[j]
-			#var ray : Vector2 = (o_psoint - origin)
-			#
-			#
-			#var o_pixel_position
-				#
-			#if pix.r > 0 && pix.r < .1:
-				#o_point = o_points[i]
-				#o_pixel_position = o_point + global_position
-					#
-			#var o_pix =  GameState.reaction_image.get_pixelv(o_pixel_position)
-			#
-			#if false:
-				#segments[len(segments) - 1].append(point)
-			#else:
-				#segments.append(PackedVector2Array())
-	## TODO look for straight lines ?
+var absorb_area: Area2D = $Area2D
+#@onready
+#var absorb_collider: CollisionPolygon2D = $Area2D/CollisionShape2D
 
 
-func build_circle(radius: int) -> PackedVector2Array:
-	assert(radius > 1)
-	var points: PackedVector2Array
-	# WARNING test resolution
-	var resolution: int = 128
-	points.clear()
-	for i: int in range(0, resolution + 1):
-		var theta : float = ((TAU / float(resolution)) * i)
-		var x = radius * cos(theta)
-		var y = radius * sin(theta)
-		var point = Vector2(x,y).round()
-		
-		points.append(point)
-	return points
+func _ready() -> void:
+	absorb_area.set_collision_layer_value(10, true)
+	absorb_area.set_collision_layer_value(2, true)
+
+
+func _physics_process(delta: float) -> void:
+	collision_points.clear()
+	collision_origins.clear()
+	
+	for i: int in range(len(raycasts)):
+		var raycast: RayCast2D = raycasts[i]
+		if raycast.is_colliding():
+			collision_points.append(raycast.get_collision_point())
+			collision_origins.append((raycast.get_collider() as Node2D).global_position)
+
+
+func _on_area_entered(area: Area2D) -> void:
+	var raycast := RayCast2D.new()
+	add_child(raycast)
+	raycasts.append(raycast)
+	overlapping_areas.append(area)
+
+
+func _on_area_exited(area: Area2D) -> void:
+	var idx: int = overlapping_areas.find(area)
+	var point := collision_points[idx]
+	var origin := collision_origins[idx]
+	
+	collision_points.remove_at(idx)
+	collision_origins.remove_at(idx)

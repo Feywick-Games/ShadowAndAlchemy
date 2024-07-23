@@ -99,6 +99,7 @@ cast_d={
 2d_physics/layer_2="Character"
 2d_physics/layer_3="HitBox"
 2d_physics/layer_9="SpriteSurface"
+2d_physics/layer_10="Absorb"
 
 [physics]
 
