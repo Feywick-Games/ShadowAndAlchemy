@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cj1kns8r4alw1"]
+[gd_scene load_steps=26 format=3 uid="uid://cj1kns8r4alw1"]
 
 [ext_resource type="Texture2D" uid="uid://3s1g5bmw00u2" path="res://Scene/Level/_Sprite/floor.png" id="1_5hoft"]
 [ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="1_ckvfe"]
@@ -34,6 +34,10 @@ _data = {
 "move_down": SubResource("Animation_o3opd")
 }
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_u52nw"]
+rough = true
+absorbent = true
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_lpvbe"]
 radius = 127.252
 
@@ -42,7 +46,7 @@ background_mode = 1
 background_color = Color(0.188235, 0.133333, 0.180392, 1)
 
 [node name="Level" type="Node2D"]
-visibility_layer = 3
+visibility_layer = 515
 y_sort_enabled = true
 
 [node name="Floor" type="Sprite2D" parent="." groups=["floor"]]
@@ -52,14 +56,14 @@ texture = ExtResource("1_5hoft")
 centered = false
 
 [node name="EffectGroup" type="Node2D" parent="." groups=["effect_group"]]
-visibility_layer = 3
+visibility_layer = 515
 
 [node name="Player" parent="." instance=ExtResource("1_ckvfe")]
-position = Vector2(134, 1009)
+position = Vector2(390, 1034)
 
 [node name="Chaz" type="CharacterBody2D" parent="."]
 y_sort_enabled = true
-position = Vector2(108, 1010)
+position = Vector2(364, 1035)
 collision_mask = 0
 script = ExtResource("5_pcfjh")
 init_state = ExtResource("6_8io4k")
@@ -91,7 +95,7 @@ offset_bottom = 4.0
 
 [node name="Mei" type="CharacterBody2D" parent="."]
 y_sort_enabled = true
-position = Vector2(83, 1010)
+position = Vector2(339, 1035)
 collision_mask = 0
 script = ExtResource("5_pcfjh")
 init_state = ExtResource("6_8io4k")
@@ -162,17 +166,18 @@ grow_vertical = 2
 color = Color(0.188235, 0.133333, 0.180392, 1)
 
 [node name="Decomposable" type="RigidBody2D" parent="."]
+visibility_layer = 513
 position = Vector2(156, 942)
+collision_mask = 17
+physics_material_override = SubResource("PhysicsMaterial_u52nw")
 script = ExtResource("11_rcpwb")
 
-[node name="SirenStatue" type="Sprite2D" parent="Decomposable"]
+[node name="Sprite2D" type="Sprite2D" parent="Decomposable"]
 material = ExtResource("11_v6xjn")
-position = Vector2(-68.3, -74)
 texture = ExtResource("5_l08pv")
-centered = false
 
 [node name="CollisionPoly" type="CollisionPolygon2D" parent="Decomposable"]
-polygon = PackedVector2Array(190, 24, -51, 22, -51, -22, 189, -24)
+polygon = PackedVector2Array(52, 43, -50, 43, -49, -8, 51, -8)
 
 [node name="Area2D" type="Area2D" parent="Decomposable"]
 position = Vector2(6.7, 22)
@@ -180,12 +185,6 @@ position = Vector2(6.7, 22)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Decomposable/Area2D"]
 position = Vector2(-8, -30)
 shape = SubResource("CircleShape2D_lpvbe")
-
-[node name="Polygon2D" type="Polygon2D" parent="Decomposable"]
-visible = false
-polygon = PackedVector2Array(0, 0, 10, 10, -10, 10)
-
-[node name="Polygon2D2" type="Polygon2D" parent="Decomposable"]
 
 [node name="WoodenBench" type="Sprite2D" parent="."]
 position = Vector2(106, 588)

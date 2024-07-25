@@ -56,7 +56,7 @@ static func generate_filled_circle(radius: int) -> Array[Vector2]:
 	
 	while theta <= TAU:
 		var x = radius * cos(theta)
-		var y = radius * sin(theta)
+		var y = radius * -sin(theta)
 		var point = Vector2(x,y).round()
 		points.append(point)
 		theta += (TAU / float(resolution))
@@ -231,16 +231,14 @@ static func polygon_subtract_b(polygon_a: PackedVector2Array, polygon_b: PackedV
 				vert = edges[vert]
 			else:
 				if loops:
-					if polygon_is_clockwise(links):
-						
-						var output: PackedVector2Array
-						# WARNING: this is a manual clean up that may produce inconsistent results
-						# Used for hanging vertices
-						for point in links:
-							if not polygon_has_point(polygon_b, point):
-								output.append(point)
-						
-						new_polygons.append(output)
+					var output: PackedVector2Array
+					# WARNING: this is a manual clean up that may produce inconsistent results
+					# Used for hanging vertices
+					for point in links:
+						if not polygon_has_point(polygon_b, point):
+							output.append(point)
+					
+					new_polygons.append(output)
 					#else:
 						#links.reverse()
 						#new_polygons.append(links.duplicate())

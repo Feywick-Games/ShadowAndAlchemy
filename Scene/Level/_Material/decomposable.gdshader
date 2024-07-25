@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 global uniform sampler2D effect_map;
+global uniform sampler2D reaction_map;
 global uniform vec2 level_size;
 
 varying vec2 global_position;
@@ -12,20 +13,20 @@ void vertex() {
 void fragment() {
 	vec2 world_uv = global_position / level_size;
 	vec2 world_pixel_size = 1.0 / level_size;
-	vec4 d_col = texture(effect_map, world_uv);
+	vec4 d_col = texture(reaction_map, world_uv);
 
-	vec4 d_col_1 = texture(effect_map, world_uv + (world_pixel_size * vec2(1,1)));
-	vec4 d_col_2 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,1)));
-	vec4 d_col_3 = texture(effect_map, world_uv + (world_pixel_size * vec2(1,0)));
-	vec4 d_col_4 = texture(effect_map, world_uv + (world_pixel_size * vec2(-1,1)));
-	vec4 d_col_5 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,-1)));
-	vec4 d_col_6 = texture(effect_map, world_uv + (world_pixel_size * vec2(-1,-1)));
-	vec4 d_col_7 = texture(effect_map, world_uv + (world_pixel_size * vec2(-1,0)));
-	vec4 d_col_8 = texture(effect_map, world_uv + (world_pixel_size * vec2(1,-1)));
-	vec4 d_col_9 = texture(effect_map, world_uv + (world_pixel_size * vec2(2,0)));
-	vec4 d_col_10 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,2)));
-	vec4 d_col_11 = texture(effect_map, world_uv + (world_pixel_size * vec2(-2,0)));
-	vec4 d_col_12 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,-2)));
+	vec4 d_col_1 = texture(reaction_map, world_uv + (world_pixel_size * vec2(1,1)));
+	vec4 d_col_2 = texture(reaction_map, world_uv + (world_pixel_size * vec2(0,1)));
+	vec4 d_col_3 = texture(reaction_map, world_uv + (world_pixel_size * vec2(1,0)));
+	vec4 d_col_4 = texture(reaction_map, world_uv + (world_pixel_size * vec2(-1,1)));
+	vec4 d_col_5 = texture(reaction_map, world_uv + (world_pixel_size * vec2(0,-1)));
+	vec4 d_col_6 = texture(reaction_map, world_uv + (world_pixel_size * vec2(-1,-1)));
+	vec4 d_col_7 = texture(reaction_map, world_uv + (world_pixel_size * vec2(-1,0)));
+	vec4 d_col_8 = texture(reaction_map, world_uv + (world_pixel_size * vec2(1,-1)));
+	vec4 d_col_9 = texture(reaction_map, world_uv + (world_pixel_size * vec2(2,0)));
+	vec4 d_col_10 = texture(reaction_map, world_uv + (world_pixel_size * vec2(0,2)));
+	vec4 d_col_11 = texture(reaction_map, world_uv + (world_pixel_size * vec2(-2,0)));
+	vec4 d_col_12 = texture(reaction_map, world_uv + (world_pixel_size * vec2(0,-2)));
 
 
 	vec4 col_1 = texture(TEXTURE, UV + (TEXTURE_PIXEL_SIZE * vec2(1,1)));
