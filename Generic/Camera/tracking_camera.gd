@@ -1,3 +1,4 @@
+class_name TrackingCamera
 extends Camera2D
 
 const GAME_SIZE := Vector2i(640,360)

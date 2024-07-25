@@ -11,7 +11,7 @@ func _ready() -> void:
 	
 
 func cast_effect_lines() -> void:
-	var new_line := EffectLine.new(_circle_shape.radius, _line_widths)
+	var new_line := EffectLine.new(circle_shape.radius, _line_widths)
 	new_line.global_position = global_position
 	get_tree().get_first_node_in_group("effect_group").add_child(new_line)
 

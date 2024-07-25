@@ -3,8 +3,12 @@ extends State
 
 signal exiting_state
 
+const EXIT_TIME := .5
+
 var _player: Player
 var _directional_animator: DirectionalAnimator
+var _exiting := false
+var _time_exiting: float
 
 func enter() -> void:
 	_player = state_machine.state_owner as Player
@@ -16,9 +20,15 @@ func enter() -> void:
 	_directional_animator.play("idle_down")
 
 
-func update(_delta: float) -> State:
+func update(delta: float) -> State:
 	if Input.is_action_just_released("decompose"):
 		exiting_state.emit()
-		return PlayerCombatState.new()
+		_exiting = true
+		
+	if _exiting:
+		_time_exiting += delta
+		if _time_exiting > .5:
+			return PlayerCombatState.new()
+		
 		
 	return

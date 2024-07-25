@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cj1kns8r4alw1"]
+[gd_scene load_steps=25 format=3 uid="uid://cj1kns8r4alw1"]
 
 [ext_resource type="Texture2D" uid="uid://3s1g5bmw00u2" path="res://Scene/Level/_Sprite/floor.png" id="1_5hoft"]
 [ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="1_ckvfe"]
@@ -33,6 +33,9 @@ _data = {
 "idle_down": SubResource("Animation_ouxfy"),
 "move_down": SubResource("Animation_o3opd")
 }
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lpvbe"]
+radius = 127.252
 
 [sub_resource type="Environment" id="Environment_ciao6"]
 background_mode = 1
@@ -159,20 +162,30 @@ grow_vertical = 2
 color = Color(0.188235, 0.133333, 0.180392, 1)
 
 [node name="Decomposable" type="RigidBody2D" parent="."]
+position = Vector2(156, 942)
 script = ExtResource("11_rcpwb")
 
 [node name="SirenStatue" type="Sprite2D" parent="Decomposable"]
 material = ExtResource("11_v6xjn")
-position = Vector2(93, 847)
+position = Vector2(-68.3, -74)
 texture = ExtResource("5_l08pv")
 centered = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Decomposable"]
-polygon = PackedVector2Array(105, 944, 105, 898, 214, 897, 214, 944)
+[node name="CollisionPoly" type="CollisionPolygon2D" parent="Decomposable"]
+polygon = PackedVector2Array(190, 24, -51, 22, -51, -22, 189, -24)
 
 [node name="Area2D" type="Area2D" parent="Decomposable"]
+position = Vector2(6.7, 22)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Decomposable/Area2D"]
+position = Vector2(-8, -30)
+shape = SubResource("CircleShape2D_lpvbe")
+
+[node name="Polygon2D" type="Polygon2D" parent="Decomposable"]
+visible = false
+polygon = PackedVector2Array(0, 0, 10, 10, -10, 10)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Decomposable"]
 
 [node name="WoodenBench" type="Sprite2D" parent="."]
 position = Vector2(106, 588)

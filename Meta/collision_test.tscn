@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://b747nvoofutsn"]
+
+[ext_resource type="Script" path="res://Generic/Environment/decomposable.gd" id="1_uhewa"]
+[ext_resource type="Script" path="res://Generic/Camera/tracking_camera.gd" id="2_rc02r"]
+[ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="3_b34ln"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0sxg2"]
+radius = 218.888
+
+[node name="Node2D" type="Node2D"]
+
+[node name="EffectGroup" type="Node2D" parent="." groups=["effect_group"]]
+visibility_layer = 3
+position = Vector2(281, 138)
+
+[node name="Decomposable" type="RigidBody2D" parent="."]
+position = Vector2(281, 138)
+script = ExtResource("1_uhewa")
+
+[node name="Area2D" type="Area2D" parent="Decomposable"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Decomposable/Area2D"]
+shape = SubResource("CircleShape2D_0sxg2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Decomposable"]
+polygon = PackedVector2Array(-100, 0, 100, 0, 100, 50, -100, 50)
+
+[node name="Polygon2D" type="Polygon2D" parent="Decomposable"]
+
+[node name="Polygon2D2" type="Polygon2D" parent="Decomposable"]
+
+[node name="TrackingCamera" type="Camera2D" parent="." node_paths=PackedStringArray("leader")]
+position = Vector2(310, 183)
+script = ExtResource("2_rc02r")
+leader = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("3_b34ln")]
+position = Vector2(183, 229)

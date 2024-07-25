@@ -18,4 +18,9 @@ func _process(delta: float) -> void:
 func _on_impact(_body: PhysicsBody2D) -> void:
 	terminating = true
 	_blast.emitting = false
+	_blast.lifetime = .5
 	_blast.finished.connect(queue_free)
+
+
+func _exit_tree() -> void:
+	EventBus.absorb_ended.emit(self)

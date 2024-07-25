@@ -36,7 +36,7 @@ var _blast: CPUParticles2D = $Blast
 @onready
 var _impact: CPUParticles2D = get_node_or_null("Impact")
 @onready
-var _circle_shape: CircleShape2D = ($CollisionShape2D as CollisionShape2D).shape
+var circle_shape: CircleShape2D = ($CollisionShape2D as CollisionShape2D).shape
 
 
 func _ready() -> void:
@@ -73,9 +73,9 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if _blast.visible:
 		if _hit_box_scale_curve:
-			_circle_shape.radius = _hit_box_scale_curve.sample(_hitbox_scale_index * (1 / scale_time))
+			circle_shape.radius = _hit_box_scale_curve.sample(_hitbox_scale_index * (1 / scale_time))
 		if scale_emission:
-			_blast.emission_sphere_radius = _circle_shape.radius
+			_blast.emission_sphere_radius = circle_shape.radius
 		
 		position += _force * force_scale
 		if create_surface:
@@ -91,9 +91,9 @@ func cast(cast_direction: Vector2) -> void:
 
 func cast_effect_surface(color: Color) -> void:
 	if not _active_surface:
-		_active_surface = EffectSurface.new(color, global_position, _circle_shape.radius)
+		_active_surface = EffectSurface.new(color, global_position, circle_shape.radius)
 		get_tree().get_first_node_in_group("effect_group").add_child(_active_surface)
-	_active_surface.add_point(global_position, _circle_shape.radius)
+	_active_surface.add_point(global_position, circle_shape.radius)
 
 
 func _on_impact(body: PhysicsBody2D) -> void:
