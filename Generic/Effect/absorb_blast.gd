@@ -3,6 +3,8 @@ extends EffectParticles
 
 @export
 var blast_color_ramp: Gradient
+@export
+var player_character: Globals.PlayerCharacter
 signal termination_scheduled
 
 var terminating := false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://csdb4iy25beuv"]
+[gd_scene load_steps=8 format=3 uid="uid://csdb4iy25beuv"]
 
 [ext_resource type="Script" path="res://Generic/Effect/effect_particles.gd" id="1_vu1dd"]
 
@@ -15,12 +15,16 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_yv5j4"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0.079646, 0.415929)
-colors = PackedColorArray(0.258824, 0.427451, 0.619608, 1, 0.984314, 0.984314, 0.945098, 1)
+colors = PackedColorArray(0.658824, 0.811765, 0.878431, 1, 0.984314, 0.984314, 0.945098, 1)
 
 [sub_resource type="Curve" id="Curve_wp7hv"]
 max_value = 100.0
 _data = [Vector2(0, 0), 0.0, 140.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uah7g"]
+resource_local_to_scene = true
+radius = 18.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_geb4b"]
 resource_local_to_scene = true
@@ -35,7 +39,7 @@ gravity = 0.0
 script = ExtResource("1_vu1dd")
 force_scale = 5.0
 _hit_box_scale_curve = SubResource("Curve_3m2qt")
-lifetime = 0.6
+lifetime = 0.3
 create_surface = true
 effect_map_color = Color(0.0784314, 0, 0, 1)
 scale_emission = true
@@ -79,7 +83,7 @@ damping_curve = SubResource("Curve_wp7hv")
 color_ramp = SubResource("Gradient_yv5j4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_geb4b")
+shape = SubResource("CircleShape2D_uah7g")
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0

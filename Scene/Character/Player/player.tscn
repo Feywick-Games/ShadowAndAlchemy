@@ -5,7 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://uc7l5srkggjn" path="res://Scene/Character/Player/_Sprite/player.png" id="2_jh3q0"]
 [ext_resource type="Script" path="res://Generic/Animation/directional_animator.gd" id="4_bvv1k"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dlnrr"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_73iqy"]
+size = Vector2(20, 10)
 
 [sub_resource type="Animation" id="Animation_ouxfy"]
 resource_name = "idle_down"
@@ -26,16 +27,14 @@ collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_drnag")
 init_state = ExtResource("2_a60yp")
-speed = 200.0
+speed = 125.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_jh3q0")
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, -13)
-shape = SubResource("CapsuleShape2D_dlnrr")
+shape = SubResource("RectangleShape2D_73iqy")
 
 [node name="DirectionalAnimator" type="AnimationPlayer" parent="."]
 libraries = {

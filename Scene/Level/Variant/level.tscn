@@ -1,8 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://cj1kns8r4alw1"]
+[gd_scene load_steps=38 format=3 uid="uid://cj1kns8r4alw1"]
 
 [ext_resource type="Texture2D" uid="uid://3s1g5bmw00u2" path="res://Scene/Level/_Sprite/floor.png" id="1_5hoft"]
 [ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="1_ckvfe"]
-[ext_resource type="Material" uid="uid://fp4b8bi0u5it" path="res://Scene/Level/_Material/floor.material" id="1_hy87x"]
+[ext_resource type="Shader" path="res://Scene/Level/_Material/floor.gdshader" id="1_fe0gm"]
 [ext_resource type="Texture2D" uid="uid://bcdh7j2xjmlqf" path="res://Scene/Character/Mei/_Sprite/mei.png" id="2_0i3fu"]
 [ext_resource type="Script" path="res://Generic/Camera/tracking_camera.gd" id="3_dvrra"]
 [ext_resource type="Texture2D" uid="uid://de327rhr7qob7" path="res://Scene/Character/Enemy/Shadow/_Sprite/shadow_male.png" id="4_ivj2t"]
@@ -17,7 +17,55 @@
 [ext_resource type="Script" path="res://Generic/Environment/decomposable.gd" id="11_rcpwb"]
 [ext_resource type="Texture2D" uid="uid://s4b7dne1nmv3" path="res://Scene/Level/_Sprite/east_wall_1.png" id="11_uitg8"]
 [ext_resource type="Material" uid="uid://6micqm3b0n3" path="res://Scene/Level/_Material/decomposable.material" id="11_v6xjn"]
+[ext_resource type="Shader" path="res://Scene/Level/_Material/decomposable.gdshader" id="12_56x0b"]
+[ext_resource type="Texture2D" uid="uid://dcyl86lhu3qby" path="res://Scene/Level/_Sprite/siren_statue_base.png" id="13_wgxxi"]
+[ext_resource type="Texture2D" uid="uid://bngyyfq4e71df" path="res://Scene/Level/_Sprite/tentacle_phone.png" id="14_ly03l"]
 [ext_resource type="Texture2D" uid="uid://duyud00fbacwr" path="res://Scene/Character/Chaz/chaz.png" id="16_fu6la"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vtu4d"]
+frequency = 0.342
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0id2s"]
+width = 1920
+height = 1080
+noise = SubResource("FastNoiseLite_vtu4d")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_keh4p"]
+frequency = 0.0292
+fractal_lacunarity = 5.39
+fractal_gain = 0.53
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3ywcn"]
+width = 1920
+height = 1080
+noise = SubResource("FastNoiseLite_keh4p")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aecf0"]
+noise_type = 3
+frequency = 0.0136
+domain_warp_enabled = true
+domain_warp_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mfg0d"]
+width = 1920
+height = 1080
+noise = SubResource("FastNoiseLite_aecf0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_22ulg"]
+shader = ExtResource("1_fe0gm")
+shader_parameter/water_color_1 = Color(0.462745, 0.670588, 0.819608, 1)
+shader_parameter/water_color_2 = Color(0.364706, 0.560784, 0.721569, 1)
+shader_parameter/electric_color_1 = Color(0.85098, 0.752941, 0.368627, 1)
+shader_parameter/electric_color_2 = Color(0.929412, 0.921569, 0.662745, 1)
+shader_parameter/white_color = Color(0.984314, 0.984314, 0.945098, 1)
+shader_parameter/fire_color_1 = Color(0.67, 0.309987, 0.2546, 1)
+shader_parameter/fire_color_2 = Color(0.78, 0.43901, 0.3042, 1)
+shader_parameter/fire_color_3 = Color(0.88, 0.643867, 0.4752, 1)
+shader_parameter/fire_color_4 = Color(0.59, 0.1357, 0.143272, 1)
+shader_parameter/water_noise = SubResource("NoiseTexture2D_mfg0d")
+shader_parameter/electric_noise = SubResource("NoiseTexture2D_0id2s")
+shader_parameter/fire_noise = SubResource("NoiseTexture2D_3ywcn")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_70c21"]
 
@@ -38,6 +86,15 @@ _data = {
 rough = true
 absorbent = true
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5vrid"]
+shader = ExtResource("12_56x0b")
+shader_parameter/raised_bottom = Vector2(0, 48)
+shader_parameter/fire_color_1 = null
+shader_parameter/fire_color_2 = null
+shader_parameter/fire_color_3 = null
+shader_parameter/fire_color_4 = null
+shader_parameter/platform = ExtResource("13_wgxxi")
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_lpvbe"]
 radius = 127.252
 
@@ -45,13 +102,16 @@ radius = 127.252
 background_mode = 1
 background_color = Color(0.188235, 0.133333, 0.180392, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l64yw"]
+size = Vector2(116, 20)
+
 [node name="Level" type="Node2D"]
 visibility_layer = 515
 y_sort_enabled = true
 
 [node name="Floor" type="Sprite2D" parent="." groups=["floor"]]
 z_index = -2
-material = ExtResource("1_hy87x")
+material = SubResource("ShaderMaterial_22ulg")
 texture = ExtResource("1_5hoft")
 centered = false
 
@@ -170,10 +230,11 @@ visibility_layer = 513
 position = Vector2(156, 942)
 collision_mask = 17
 physics_material_override = SubResource("PhysicsMaterial_u52nw")
+lock_rotation = true
 script = ExtResource("11_rcpwb")
 
 [node name="Sprite2D" type="Sprite2D" parent="Decomposable"]
-material = ExtResource("11_v6xjn")
+material = SubResource("ShaderMaterial_5vrid")
 texture = ExtResource("5_l08pv")
 
 [node name="CollisionPoly" type="CollisionPolygon2D" parent="Decomposable"]
@@ -186,10 +247,68 @@ position = Vector2(6.7, 22)
 position = Vector2(-8, -30)
 shape = SubResource("CircleShape2D_lpvbe")
 
-[node name="WoodenBench" type="Sprite2D" parent="."]
-position = Vector2(106, 588)
+[node name="Decomposable2" type="RigidBody2D" parent="."]
+visibility_layer = 513
+position = Vector2(634, 933)
+collision_mask = 17
+physics_material_override = SubResource("PhysicsMaterial_u52nw")
+script = ExtResource("11_rcpwb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Decomposable2"]
+material = ExtResource("11_v6xjn")
+texture = ExtResource("14_ly03l")
+
+[node name="CollisionPoly" type="CollisionPolygon2D" parent="Decomposable2"]
+polygon = PackedVector2Array(52, 43, -50, 43, -49, -8, 51, -8)
+
+[node name="Area2D" type="Area2D" parent="Decomposable2"]
+position = Vector2(6.7, 22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Decomposable2/Area2D"]
+position = Vector2(-8, -30)
+shape = SubResource("CircleShape2D_lpvbe")
+
+[node name="Decomposable3" type="RigidBody2D" parent="."]
+visibility_layer = 513
+position = Vector2(144, 605)
+collision_mask = 17
+physics_material_override = SubResource("PhysicsMaterial_u52nw")
+script = ExtResource("11_rcpwb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Decomposable3"]
+material = ExtResource("11_v6xjn")
 texture = ExtResource("6_eaaun")
-centered = false
+
+[node name="CollisionPoly" type="CollisionPolygon2D" parent="Decomposable3"]
+polygon = PackedVector2Array(28, 11, -28, 10, -29, -7, 30, -7)
+
+[node name="Area2D" type="Area2D" parent="Decomposable3"]
+position = Vector2(6.7, 22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Decomposable3/Area2D"]
+position = Vector2(-8, -30)
+shape = SubResource("CircleShape2D_lpvbe")
+
+[node name="Decomposable4" type="RigidBody2D" parent="."]
+visibility_layer = 513
+position = Vector2(283, 605)
+collision_mask = 17
+physics_material_override = SubResource("PhysicsMaterial_u52nw")
+script = ExtResource("11_rcpwb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Decomposable4"]
+material = ExtResource("11_v6xjn")
+texture = ExtResource("6_eaaun")
+
+[node name="CollisionPoly" type="CollisionPolygon2D" parent="Decomposable4"]
+polygon = PackedVector2Array(28, 11, -28, 10, -29, -7, 30, -7)
+
+[node name="Area2D" type="Area2D" parent="Decomposable4"]
+position = Vector2(6.7, 22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Decomposable4/Area2D"]
+position = Vector2(-8, -30)
+shape = SubResource("CircleShape2D_lpvbe")
 
 [node name="NorthWall1" type="Sprite2D" parent="."]
 position = Vector2(32, 720)
@@ -213,3 +332,11 @@ centered = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ciao6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(153, 995)
+shape = SubResource("RectangleShape2D_l64yw")

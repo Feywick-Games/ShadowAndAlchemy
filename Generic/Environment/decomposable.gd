@@ -13,6 +13,7 @@ var _sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
 	absorb_area.set_collision_mask_value(10, true)
+	absorb_area.set_collision_mask_value(1,false)
 	absorb_area.area_entered.connect(_on_area_entered)
 	EventBus.absorb_ended.connect(_on_area_exited)
 
