@@ -12,12 +12,15 @@ script = ExtResource("1_n5vvf")
 metadata/_edit_horizontal_guides_ = [-62.0]
 
 [node name="PolygonB" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(100, 0, 100, 50, 71, 50, 73, 46, 70, 28, 42, 0)
+position = Vector2(-187, -2)
+polygon = PackedVector2Array(41, -140, 26, 4, 48, 135, 1, 161, -54, 154, -24, 8, -47, -136, 0, -160)
 
 [node name="PolygonA" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(45, 50, 12, 17, -48, 30, -55, 50, -100, 50, -100, 0, -34, 0, -45, 28, -45, 29, -48, 30, -55, 50, -100, 50)
+position = Vector2(-187, -2)
+polygon = PackedVector2Array(-100, -100, -73, -58, 0, -50, 55, -48, 100, -100, 100, 100, 62, 52, 0, 50, -63, 56, -100, 100)
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(-165, -77)
+position = Vector2(220, 80)
+scale = Vector2(0.35, 0.35)
 color = Color(0.577008, 0.577008, 0.577008, 1)
 polygon = PackedVector2Array(30, 12, 30, -12, 12, -30, -12, -30, -30, -12, -30, 12, -12, 30, 12, 30)

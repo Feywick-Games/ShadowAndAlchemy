@@ -26,6 +26,7 @@ shape = SubResource("CircleShape2D_0sxg2")
 polygon = PackedVector2Array(-100, 0, 100, 0, 100, 50, -100, 50)
 
 [node name="Polygon2D" type="Polygon2D" parent="Decomposable"]
+visible = false
 
 [node name="Polygon2D2" type="Polygon2D" parent="Decomposable"]
 

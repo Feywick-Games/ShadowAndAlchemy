@@ -42,7 +42,7 @@ func _on_area_exited(area: AbsorbBlast) -> void:
 	
 	var origin := to_local(area.global_position)
 	var radius: int = area.circle_shape.radius
-	var impact: PackedVector2Array = Geometry.generate_arc(radius, 64)
+	var impact: PackedVector2Array = Geometry.generate_arc(radius, 2)
 	
 	var colors: PackedColorArray
 	for i in range(len(impact)):

@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	draw_colored_polygon(polygon_b, Color.BLUE)
-	#draw_colored_polygon(polygon_a, Color.RED)
+	draw_colored_polygon(polygon_a, Color.RED)
 	for point in points:
 		draw_colored_polygon(point, Color.GREEN)
 	#draw_colored_polygon(points[1], Color.PINK)

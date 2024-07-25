@@ -101,146 +101,159 @@ static func polygon_subtract_b(polygon_a: PackedVector2Array, polygon_b: PackedV
 			polygon_b = temp
 			break
 	
-	var exited := false
 	
-	while not exited:
-		if not polygon_is_clockwise(polygon_a):
-			polygon_a.reverse()
-			
-		if not polygon_is_clockwise(polygon_b):
-			polygon_a.reverse()
+	if not polygon_is_clockwise(polygon_a):
+		polygon_a.reverse()
 		
-		if polygon_a.size() < 3:
-			return []
-		if polygon_b.size() < 3:
-			return [polygon_a]
+	if not polygon_is_clockwise(polygon_b):
+		polygon_a.reverse()
+	
+	if polygon_a.size() < 3:
+		return []
+	if polygon_b.size() < 3:
+		return [polygon_a]
+	
+	var temp: PackedVector2Array
+	
+	for point in polygon_a:
+		if not point in temp:
+			temp.append(point)
+	polygon_a = temp.duplicate()
+	temp.clear()
+	for point in polygon_b:
+		if not point in temp:
+			temp.append(point)
+	polygon_b = temp.duplicate()
+	
+	for i in range(len(polygon_a)):
+		if i != len(polygon_a) - 1:
+			if polygon_a[i] != polygon_a[i + 1]:
+				edges[polygon_a[i]] = polygon_a[i + 1]
+		else:
+			if polygon_a[i] != polygon_a[0]:
+				edges[polygon_a[i]] = polygon_a[0]
+	
+	for key in edges:
+		if polygon_has_point(polygon_b, key):
+			edges.erase(key)
+	
+	
+	var i: int = 0
+	while i < len(polygon_b):
 		
-		var temp: PackedVector2Array
+		var b0: int = i
+		var b1: int
 		
-		for point in polygon_a:
-			if not point in temp:
-				temp.append(point)
-		polygon_a = temp.duplicate()
-		temp.clear()
-		for point in polygon_b:
-			if not point in temp:
-				temp.append(point)
-		polygon_b = temp.duplicate()
+		var point123 = polygon_b[b0]
 		
-		for i in range(len(polygon_a)):
-			if i != len(polygon_a) - 1:
-				if polygon_a[i] != polygon_a[i + 1]:
-					edges[polygon_a[i]] = polygon_a[i + 1]
-			else:
-				if polygon_a[i] != polygon_a[0]:
-					edges[polygon_a[i]] = polygon_a[0]
+		if i == len(polygon_b) - 1:
+			b1 = 0
+		else:
+			b1 = i + 1
 		
-		var i: int = 0
-		while i < len(polygon_b):
-			
-			var b0: int = i
-			var b1: int
-			
-			var point123 = polygon_b[b0]
-			
-			if i == len(polygon_b) - 1:
-				b1 = 0
-			else:
-				b1 = i + 1
-			
 
+		
+		for j: int in range(len(polygon_a)):
 			
-			for j: int in range(len(polygon_a)):
-				
-				var a0: int = j
-				var a1: int 
-				
-				if j == len(polygon_a) -1:
-					a1 = 0
-				else:
-					a1 = j + 1
-				
-				if intersect(polygon_a[a0], polygon_a[a1], polygon_b[b0], polygon_b[b1]):
-					var normal_a = (polygon_a[a1] - polygon_a[a0]).rotated(-PI/2).normalized()
-					var normal_b = (polygon_b[b1] - polygon_b[b0]).normalized()
-					var intersection_point := line_intersection(polygon_a[a0], polygon_a[a1], polygon_b[b0], polygon_b[b1]).round()
-					if normal_a.dot(normal_b) <= 0:
-						is_inside = true
+			var a0: int = j
+			var a1: int 
+			
+			if j == len(polygon_a) -1:
+				a1 = 0
+			else:
+				a1 = j + 1
+			
+			if intersect(polygon_a[a0], polygon_a[a1], polygon_b[b0], polygon_b[b1]):
+				var normal_a = (polygon_a[a1] - polygon_a[a0]).rotated(-PI/2).normalized()
+				var normal_b = (polygon_b[b1] - polygon_b[b0]).normalized()
+				print(normal_a)
+				print(normal_b)
+				print(normal_a.dot(normal_b))
+				var intersection_point := line_intersection(polygon_a[a0], polygon_a[a1], polygon_b[b0], polygon_b[b1]).round()
+				if normal_a.dot(normal_b) < 0:
+					is_inside = true
 
-						if not polygon_has_point(polygon_a, polygon_b[b1]):
-							var interp_point := intersection_point + (polygon_b[b1] - intersection_point).normalized()
-							if b1 != 0:
-								polygon_b.insert(b1, interp_point)
-							else:
-								polygon_b.append(interp_point)
-							#print("interp ", interp_point)
-							#edges[interp_point] = intersection_point
-						if polygon_b[b1] != intersection_point:
-							edges[polygon_b[b1]] = intersection_point
-						if intersection_point != polygon_a[a1]:
-							edges[intersection_point] = polygon_a[a1]
-						break
-					else:
-						is_inside = false
-						
-						if polygon_has_point(polygon_a, polygon_b[b0]):
-							if intersection_point != polygon_b[b0]:
-								edges[intersection_point] = polygon_b[b0]
-									
-							if polygon_a[a0] != intersection_point:
-								edges[polygon_a[a0]] = intersection_point
-							exited = true
-							break
-						
-				if is_inside and j == len(polygon_a) - 1:
-					if polygon_b[b0] != polygon_b[b1]:
-						edges[polygon_b[b1]] = polygon_b[b0]
-			if exited:
-				break
-			
-			i+=1
-		
-		#if edges.keys().size() == polygon_a.size():
-			#for point in polygon_a:
-				#if polygon_has_point(polygon_b, point):
-					#return new_polygons
-			#return [polygon_a]
-		
-		# isolate and return generated polygons
-		var visited: Array[Vector2]
-		var vert: Vector2 = edges.keys()[0]
-		var links: PackedVector2Array
-		var discard: Array[PackedVector2Array]
-		links.append(vert)
-		while not has_same_elements(edges.keys(), visited):
-			if edges.has(vert) and not vert in visited:
-				var idx: int = links.find(vert)
-				var loops: bool = links.has(edges[vert])
-				if idx != -1 and not loops:
-					
-					if idx < len(links) - 1:
-						links.insert(idx + 1, edges[vert])
-					else:
-						links.insert(0, edges[vert])
-					visited.append(vert)
-					vert = edges[vert]
-				else:
-					if loops:
-						if polygon_is_clockwise(links):
-							new_polygons.append(links.duplicate())
+					if not polygon_has_point(polygon_a, polygon_b[b1]):
+						var interp_point := intersection_point + (polygon_b[b1] - intersection_point).normalized()
+						if b1 != 0:
+							polygon_b.insert(b1, interp_point)
 						else:
-							links.reverse()
-							new_polygons.append(links.duplicate())
-					else:
-						discard.append(links.duplicate())
-					vert = left_outer_join(edges.keys(), visited)[0]
-					links.clear()
-					links.append(vert)
+							polygon_b.append(interp_point)
+						print("interp")
+						edges[interp_point] = intersection_point
+					#else:
+						#edges.erase(polygon_a[a0])
+					if polygon_b[b1] != intersection_point:
+						edges[polygon_b[b1]] = intersection_point
+					if intersection_point != polygon_a[a1]:
+						edges[intersection_point] = polygon_a[a1]
+					#if polygon_has_point(polygon_b, polygon_a[a0]):
+						#edges.erase(a0)
+					break
+				elif normal_a.dot(normal_b) > 0:
+					is_inside = false
+
+					if polygon_has_point(polygon_a, polygon_b[b0]):
+						if intersection_point != polygon_b[b0]:
+							edges[intersection_point] = polygon_b[b0]
+								
+						if polygon_a[a0] != intersection_point:
+							edges[polygon_a[a0]] = intersection_point
+						break
+					
+			if is_inside and j == len(polygon_a) - 1:
+				if polygon_b[b0] != polygon_b[b1]:
+					edges[polygon_b[b1]] = polygon_b[b0]
+		i+=1
+	
+	if edges.keys().size() == polygon_a.size():
+		for point in polygon_a:
+			if polygon_has_point(polygon_b, point):
+				return []
+		return [polygon_a]
+	# isolate and return generated polygons
+	var visited: Array[Vector2]
+	var vert: Vector2 = edges.keys()[0]
+	var links: PackedVector2Array
+	var discard: Array[PackedVector2Array]
+	links.append(vert)
+	while not has_same_elements(edges.keys(), visited):
+		if edges.has(vert) and not vert in visited:
+			var idx: int = links.find(vert)
+			var loops: bool = links.has(edges[vert])
+			if idx != -1 and not loops:
+				
+				if idx < len(links) - 1:
+					links.insert(idx + 1, edges[vert])
+				else:
+					links.insert(0, edges[vert])
+				visited.append(vert)
+				vert = edges[vert]
 			else:
-				if not left_outer_join(edges.keys(), visited).is_empty():
-					vert = left_outer_join(edges.keys(), visited)[0]
-					links.clear()
-					links.append(vert)
+				if loops:
+					if polygon_is_clockwise(links):
+						
+						var output: PackedVector2Array
+						# WARNING: this is a manual clean up that may produce inconsistent results
+						# Used for hanging vertices
+						for point in links:
+							if not polygon_has_point(polygon_b, point):
+								output.append(point)
+						
+						new_polygons.append(output)
+					#else:
+						#links.reverse()
+						#new_polygons.append(links.duplicate())
+				else:
+					discard.append(links.duplicate())
+				vert = left_outer_join(edges.keys(), visited)[0]
+				links.clear()
+				links.append(vert)
+		else:
+			if not left_outer_join(edges.keys(), visited).is_empty():
+				vert = left_outer_join(edges.keys(), visited)[0]
+				links.clear()
+				links.append(vert)
 
 	return new_polygons
 
