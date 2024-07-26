@@ -148,12 +148,12 @@ void fragment() {
 		(map_color_d4.r > water_effect_mask && map_color_d9.r <= fire_effect_mask)
 		);
 
-		float time_scale2 = TIME * TEXTURE_PIXEL_SIZE.x * 30.0;
+		float time_scale2 = TIME * (1.0/level_size.x) * 30.0;
 		vec4 direction_color = texture(fire_noise, world_uv + time_scale2);
 		float theta = direction_color.r * TAU;
-		vec2 world_uv_offset = mat2(vec2(cos(theta), sin(theta)), vec2(-sin(theta), cos(theta))) * vec2(0,TEXTURE_PIXEL_SIZE.x * 1.5);
-		float time_scale = (TIME * TEXTURE_PIXEL_SIZE.x);
-		vec4 noise_color = texture(fire_noise, (world_uv_offset + vec2(world_uv.x * 2.0, world_uv.y)));
+		vec2 world_uv_offset = mat2(vec2(cos(theta), sin(theta)), vec2(-sin(theta), cos(theta))) * vec2(0,(1.0/level_size.x) * 2.0);
+		float time_scale = (TIME *  (1.0/level_size.x));
+		vec4 noise_color = texture(fire_noise, (world_uv_offset + vec2(world_uv.x, world_uv.y)));
 
 		//if (map_color.r < fire_effect_mask - .05)
 		//{
