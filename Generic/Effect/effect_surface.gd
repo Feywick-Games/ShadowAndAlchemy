@@ -4,6 +4,7 @@ extends Node2D
 var radius: int
 var color: Color
 var last_position: Vector2
+var points: PackedVector2Array
 
 func _init(color_: Color, point: Vector2, radius_: int, alt_material = null) -> void:
 	color = color_
@@ -23,7 +24,9 @@ func add_point(point: Vector2, radius_: int) -> void:
 	global_position = point
 	if radius_ != radius:
 		radius = radius_
+		points = Geometry.generate_arc(radius, 1, 0, TAU, Vector2(1,0.75))
 
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, radius * .95, color)
+	if points.size() > 3:
+		draw_colored_polygon(points, color)

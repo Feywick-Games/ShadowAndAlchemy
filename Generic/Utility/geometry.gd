@@ -1,7 +1,7 @@
 class_name Geometry
 extends Object 
 
-static func generate_arc(radius: int, pixels_per_point: int, start := 0, end := TAU) -> PackedVector2Array:
+static func generate_arc(radius: int, pixels_per_point: int, start := 0, end := TAU, scale := Vector2.ONE, repeat_end := false) -> PackedVector2Array:
 	assert(radius > 1)
 	var resolution: float = radius * (TAU/float(pixels_per_point))
 	
@@ -11,10 +11,14 @@ static func generate_arc(radius: int, pixels_per_point: int, start := 0, end := 
 	while theta <= end :
 		var x = radius * cos(theta)
 		var y = radius * sin(theta)
-		var point = Vector2(x,y).round()
+		var point = (Vector2(x,y) * scale).round()
 		points.append(point)
 		theta += TAU / resolution
-		
+	
+	
+	if repeat_end:
+		points.append(points[0])
+	
 	return points
 
 

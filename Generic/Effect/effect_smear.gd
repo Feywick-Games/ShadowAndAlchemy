@@ -1,7 +1,6 @@
 class_name EffectSmear
 extends EffectSurface
 
-var points: PackedVector2Array
 var uvs: PackedVector2Array
 var last_frame_points: PackedVector2Array
 var last_radius: int

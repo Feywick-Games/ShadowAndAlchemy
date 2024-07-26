@@ -40,16 +40,17 @@ func _process(delta: float) -> void:
 		last_frame_segments = segments.duplicate()
 		
 		if not last_frame_segments.is_empty():
-			segments = find_segments(Geometry.generate_arc(radius, MIN_PUDDLE_DIAMETER), last_frame_segments, radius, radius - last_radius,1)
+			segments = find_segments(Geometry.generate_arc(radius, MIN_PUDDLE_DIAMETER, 0, TAU, Vector2(1,0.75), true), last_frame_segments, radius, radius - last_radius,1)
 		else:
 			for i: int in range(MIN_PUDDLE_DIAMETER + 1, radius):
-				var previous_segments: Array[PackedVector2Array] = [Geometry.generate_arc(i - 1, 1)]
-				var circle_points: PackedVector2Array = Geometry.generate_arc(i, 1)
+				var previous_segments: Array[PackedVector2Array] = [Geometry.generate_arc(i - 1, 1, 0, TAU,  Vector2(1,0.75), true)]
+				var circle_points: PackedVector2Array = Geometry.generate_arc(i, 1, 0, TAU, Vector2(1,0.75), true)
 				segments = find_segments(circle_points, previous_segments, i, 1, 1)
 				
 				radius = i
 				
-				if segments.is_empty():
+				if not segments.is_empty(): 
+					last_frame_segments = previous_segments
 					break
 
 		last_radius = radius
@@ -110,11 +111,12 @@ func slice_segment(segment: PackedVector2Array, output: ) -> Array[PackedVector2
 func _draw() -> void:
 	for segment in segments:
 		if len(segment) > 2:
-			draw_polyline(segment, Color(0, 1, 0, 1  ), width)
-	
-	if not segments.is_empty():
-		draw_circle(Vector2.ZERO, radius - width, Color.BLACK)
-	
+			draw_polyline(segment, Color(0, 1, 0, 1  ), 1)
+		
+	for segment in last_frame_segments:
+		if len(segment) > 2:
+			draw_polyline(segment, Color(0, 1, 0, 1  ), 1)
+
 	if terminating:
 		draw_circle(Vector2.ZERO, 300, Color.BLACK)
 	

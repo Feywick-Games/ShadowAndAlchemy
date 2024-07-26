@@ -30,8 +30,9 @@ init_state = ExtResource("2_a60yp")
 speed = 125.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 4)
 texture = ExtResource("2_jh3q0")
-offset = Vector2(0, -24)
+offset = Vector2(0, -27)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_73iqy")
@@ -51,3 +52,4 @@ offset_right = 7.0
 offset_bottom = 4.0
 
 [node name="ParticlePosition" type="Node2D" parent="."]
+position = Vector2(0, -23)

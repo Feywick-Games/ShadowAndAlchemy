@@ -5,7 +5,8 @@ var _effect_viewport: SubViewport
 var effect_map_sprite: Sprite2D
 var _reaction_viewport: SubViewport
 var reaction_image: Image
-var level_size := Vector2(1920,1080)
+var level_size: Vector2
+var set_level_size: Vector2
 
 func _ready() -> void:
 	_effect_viewport = get_tree().get_first_node_in_group("effect_viewport")

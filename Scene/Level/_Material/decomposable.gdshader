@@ -13,8 +13,14 @@ uniform vec4 fire_color_1 : source_color;
 uniform vec4 fire_color_2 : source_color;
 uniform vec4 fire_color_3 : source_color;
 uniform vec4 fire_color_4 : source_color;
+uniform float time:hint_range(0.0, 1.57, 0.001) = 1.57;
 
 varying vec2 global_position;
+
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,96.233))) * 43758.5453);
+}
+
 
 void vertex() {
 	global_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
@@ -58,18 +64,18 @@ void fragment() {
 		d_col_12.b > 0.0
 	);
 	
-	vec4 e_col_1 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,12) * (1.0-UV.y)));
-	vec4 e_col_2 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,16)* (1.0-UV.y)));
-	vec4 e_col_3 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,20)* (1.0-UV.y)));
-	vec4 e_col_4 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,24)* (1.0-UV.y)));
-	vec4 e_col_5 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,28)* (1.0-UV.y)));
-	vec4 e_col_6 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,32)* (1.0-UV.y)));
-	vec4 e_col_7 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,40)* (1.0-UV.y)));
-	vec4 e_col_8 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,44)* (1.0-UV.y)));
-	vec4 e_col_9 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,48))* (1.0-UV.y));
-	vec4 e_col_10 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,52)* (1.0-UV.y)));
-	vec4 e_col_11 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,54)* (1.0-UV.y)));
-	vec4 e_col_12 = texture(effect_map, world_uv + (world_pixel_size * vec2(0,60)* (1.0-UV.y)));
+	vec4 e_col_1 = texture(effect_map, mix(world_uv, image_bottom ,.1));
+	vec4 e_col_2 = texture(effect_map, mix(world_uv, image_bottom,.2));
+	vec4 e_col_3 = texture(effect_map, mix(world_uv, image_bottom,.3));
+	vec4 e_col_4 = texture(effect_map, mix(world_uv, image_bottom,.4));
+	vec4 e_col_5 = texture(effect_map, mix(world_uv, image_bottom,.5));
+	vec4 e_col_6 = texture(effect_map, mix(world_uv, image_bottom,.6));
+	vec4 e_col_7 = texture(effect_map, mix(world_uv, image_bottom,.7));
+	vec4 e_col_8 = texture(effect_map, mix(world_uv, image_bottom,.8));
+	vec4 e_col_9 = texture(effect_map, mix(world_uv, image_bottom,.9));
+	vec4 e_col_10 = texture(effect_map, mix(world_uv, image_bottom, .95));
+	vec4 e_col_11 = texture(effect_map, mix(world_uv, image_bottom, .98));
+	vec4 e_col_12 = texture(effect_map, mix(world_uv, image_bottom,1));
 
 	bool neighbor_fire = (
 		e_col_1.r > water_effect_mask && e_col_1.r <= fire_effect_mask ||
@@ -85,16 +91,25 @@ void fragment() {
 		e_col_11.r > water_effect_mask && e_col_11.r <= fire_effect_mask ||
 		e_col_12.r > water_effect_mask && e_col_12.r <= fire_effect_mask
 	);
+	
+	vec2 texture_resolution = 1.0 / TEXTURE_PIXEL_SIZE;
+	vec2 within_texture_pixel=floor(UV * texture_resolution);
 
+	vec4 col = t_col;
+	
+	if (t_col.a == 0.0)
+	{
+		col = p_col;
+	}
 
 	if (d_col.b > 0.0) {
 		COLOR = vec4(0);
 	}
-	else if (neighbor_disintegrated)
+	else if(sin(time) < rand(within_texture_pixel))
 	{
-		COLOR = p_col;
+		COLOR = vec4(0);
 	}
-	else if (neighbor_fire && (t_col.a > 0.0 || p_col.a > 0.0))
+	else if (neighbor_fire && (col.a > 0.0))
 	{
 		vec4 map_color_d = max(texture(TEXTURE, UV + (TEXTURE_PIXEL_SIZE * vec2(0,1))), texture(platform, UV + (TEXTURE_PIXEL_SIZE * vec2(0,1))));
 		vec4 map_color_u = max(texture(TEXTURE, UV + (TEXTURE_PIXEL_SIZE * vec2(0,-1))), texture(platform, UV + (TEXTURE_PIXEL_SIZE * vec2(0,1))));
@@ -137,21 +152,24 @@ void fragment() {
 			//noise_color.r = clamp(noise_color.r, .35, 1);
 		//}
 		//
-		if (is_outline || is_outline2)
-		{
-			noise_color.r -= .1 + (float(int(sin(TIME) * 1000.0) % 2000) / 20000.0);
-		}
+		//if (is_outline || is_outline2)
+		//{
+			//noise_color.r -= .1 + (float(int(sin(TIME) * 1000.0) % 2000) / 20000.0);
+		//}
 		//else if (is_top)
 		//{
 			//noise_color.r = .4;
 		//}
 		//else
+		
+
+		
 		{
 			if (noise_color.r < .3){
-				COLOR = t_col;
+				COLOR = col;
 			}
 			else if (noise_color.r < .4){
-				COLOR = mix(t_col, fire_color_4, .75);
+				COLOR = mix(col, fire_color_4, .75);
 			}
 			else if (noise_color.r < .6) {
 				COLOR = fire_color_4;
@@ -169,6 +187,10 @@ void fragment() {
 				COLOR = fire_color_3;
 			}
 		}
+	}
+	else if (neighbor_disintegrated)
+	{
+		COLOR = p_col;
 	}
 	else if (t_col.a == 0.0 && p_col.a > 0.0)
 	{

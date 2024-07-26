@@ -102,10 +102,6 @@ cast_d={
 2d_physics/layer_9="SpriteSurface"
 2d_physics/layer_10="Absorb"
 
-[physics]
-
-2d/default_gravity=0.0
-
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
@@ -133,5 +129,5 @@ fire_effect_mask={
 }
 level_size={
 "type": "vec2",
-"value": Vector2(1920, 1080)
+"value": Vector2(1280, 720)
 }

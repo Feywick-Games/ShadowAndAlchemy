@@ -1,13 +1,18 @@
 class_name AbsorbBlast
 extends EffectParticles
 
+const TIME_PER_REFRESH: float = .5
+
 @export
 var blast_color_ramp: Gradient
 @export
 var player_character: Globals.PlayerCharacter
+
 signal termination_scheduled
+signal refresh_absorb
 
 var terminating := false
+var time_since_refresh: float = 0
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -18,6 +23,12 @@ func _process(delta: float) -> void:
 			_active_surface.queue_free()
 			_active_surface = null
 			termination_scheduled.emit()
+
+	if time_since_refresh >= TIME_PER_REFRESH:
+		refresh_absorb.emit()
+		time_since_refresh = 0
+
+	time_since_refresh += delta
 
 
 func _on_impact(_body: PhysicsBody2D) -> void:

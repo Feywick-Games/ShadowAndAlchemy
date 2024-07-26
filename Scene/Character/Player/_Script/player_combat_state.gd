@@ -22,7 +22,7 @@ func update(_delta: float) -> State:
 		return PlayerWaterBlastState.new()
 		
 	_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	_player.velocity = _direction * _player.speed
+	_player.velocity = _direction * _player.speed * Vector2(1,.75)
 	return
 
 
