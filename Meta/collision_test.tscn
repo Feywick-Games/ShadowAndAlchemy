@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Generic/Environment/decomposable.gd" id="1_uhewa"]
 [ext_resource type="Script" path="res://Generic/Camera/tracking_camera.gd" id="2_rc02r"]
-[ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="3_b34ln"]
+[ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/PlayerCharacter/player.tscn" id="3_b34ln"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0sxg2"]
 radius = 218.888

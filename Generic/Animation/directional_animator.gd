@@ -8,7 +8,7 @@ var current_direction : String
 # have this degree of cardinality.
 
 # alt_ext can be used when dependent other animations
-func play_directional(anim: String, direction: Vector2, eight_direction:bool = false, alt_ext := "",
+func play_directional(anim: String, direction:= Vector2.ZERO, eight_direction:bool = false, alt_ext := "",
 custom_blend: float = -1,custom_speed: float = 1.0, from_end: bool = false) -> void:
 	var theta : float = direction.angle()
 	var eight_direction_str := ""

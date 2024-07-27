@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7oqfdrx75m02"]
+[gd_scene load_steps=6 format=3 uid="uid://c7oqfdrx75m02"]
 
 [ext_resource type="Script" path="res://Generic/Effect/electric_blast.gd" id="1_ahan5"]
 
@@ -7,16 +7,6 @@ min_value = 22.0
 max_value = 50.0
 _data = [Vector2(0, 22), 0.0, 39.2, 0, 0, Vector2(1, 50), 0.0, 0.0, 0, 0]
 point_count = 2
-
-[sub_resource type="Curve" id="Curve_2y1md"]
-min_value = -1.0
-_data = [Vector2(0.366142, 1), 0.0, 0.0, 0, 0, Vector2(1, -1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_m37yc"]
-max_value = 500.0
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.795276, 0), 0.0, 0.0, 0, 0, Vector2(1, 500), 0.0, 0.0, 0, 0]
-point_count = 3
 
 [sub_resource type="Curve" id="Curve_w4dw7"]
 _data = [Vector2(0.0144928, 1), 0.0, 0.150663, 0, 0, Vector2(0.960145, 0), 0.0264191, 0.0, 0, 0]
@@ -52,11 +42,9 @@ spread = 0.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 20.0
 initial_velocity_max = 100.0
-orbit_velocity_min = -773.72
-orbit_velocity_max = 189.78
-orbit_velocity_curve = SubResource("Curve_2y1md")
-radial_accel_max = 500.0
-radial_accel_curve = SubResource("Curve_m37yc")
+orbit_velocity_min = -125.0
+radial_accel_min = -1000.0
+radial_accel_max = -1000.0
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_w4dw7")
 color_initial_ramp = SubResource("Gradient_d1m0q")

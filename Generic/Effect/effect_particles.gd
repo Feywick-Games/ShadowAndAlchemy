@@ -77,7 +77,7 @@ func _physics_process(delta: float) -> void:
 		if scale_emission:
 			_blast.emission_sphere_radius = circle_shape.radius
 		
-		position += _force * force_scale
+		position += _force * force_scale * Vector2(1,.75)
 		if create_surface:
 			cast_effect_surface(effect_map_color)
 		

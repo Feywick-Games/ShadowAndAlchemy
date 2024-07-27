@@ -27,6 +27,17 @@ func _physics_process(delta: float) -> void:
 	
 	global_position = global_position.round()
 	
+	if global_position.x + 320 > GameState.level_size.x:
+		global_position.x = GameState.level_size.x - 320
+	elif global_position.x < 320:
+		global_position.x = 320
+
+	
+	if global_position.y + 180 > GameState.level_size.y:
+		global_position.y = GameState.level_size.y - 180
+	elif global_position.y < 180:
+		global_position.y = 180
+
 
 func _on_cam_follow_requested(node: Node2D) -> void:
 	leader = node
