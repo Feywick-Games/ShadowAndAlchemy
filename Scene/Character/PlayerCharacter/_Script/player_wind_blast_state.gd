@@ -1,12 +1,11 @@
 class_name PlayerWindBlastState
-extends State
+extends PlayerState
 
-var _player: Player
 var _directional_animator: DirectionalAnimator
 var particles: WindBlast
 
 func enter() -> void:
-	_player = state_machine.state_owner as Player
+	super.enter()
 	var mouse_pos: Vector2 = _player.get_global_mouse_position()
 	var direction = (mouse_pos - _player.global_position).normalized()
 	particles = _player.WIND_BLAST_SCENE.instantiate()

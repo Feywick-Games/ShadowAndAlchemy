@@ -2,7 +2,7 @@ class_name Geometry
 extends Object 
 
 static func generate_arc(radius: int, pixels_per_point: int, start := 0, end := TAU, scale := Vector2.ONE, repeat_end := false) -> PackedVector2Array:
-	assert(radius > 1)
+	assert(radius > 1)   
 	var resolution: float = radius * (TAU/float(pixels_per_point))
 	
 	var points: PackedVector2Array
@@ -147,8 +147,6 @@ static func polygon_subtract_b(polygon_a: PackedVector2Array, polygon_b: PackedV
 		
 		var b0: int = i
 		var b1: int
-		
-		var point123 = polygon_b[b0]
 		
 		if i == len(polygon_b) - 1:
 			b1 = 0

@@ -1,14 +1,9 @@
-[gd_scene load_steps=43 format=3 uid="uid://bng1ub54x500c"]
+[gd_scene load_steps=34 format=3 uid="uid://bng1ub54x500c"]
 
 [ext_resource type="Script" path="res://Scene/Level/_Script/level.gd" id="1_bugqy"]
 [ext_resource type="Shader" path="res://Scene/Level/_Material/floor.gdshader" id="2_67wes"]
 [ext_resource type="Texture2D" uid="uid://bjupyfjxqg4si" path="res://Scene/Level/_Sprite/level_1.png" id="3_5fdul"]
-[ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="4_02fpl"]
-[ext_resource type="Script" path="res://Generic/Character/character.gd" id="5_gdbgy"]
-[ext_resource type="Script" path="res://StateMachine/state.gd" id="6_qm657"]
-[ext_resource type="Texture2D" uid="uid://duyud00fbacwr" path="res://Scene/Character/Chaz/chaz.png" id="7_ipin2"]
-[ext_resource type="Script" path="res://Generic/Animation/directional_animator.gd" id="8_sv3tc"]
-[ext_resource type="Texture2D" uid="uid://bcdh7j2xjmlqf" path="res://Scene/Character/Mei/_Sprite/mei.png" id="9_lk70p"]
+[ext_resource type="PackedScene" uid="uid://c8i14r1vlwlfo" path="res://Scene/Character/PlayerCharacter/Izzy/izzy.tscn" id="5_1eru1"]
 [ext_resource type="Texture2D" uid="uid://de327rhr7qob7" path="res://Scene/Character/Enemy/Shadow/_Sprite/shadow_male.png" id="10_70eed"]
 [ext_resource type="Script" path="res://Generic/Camera/tracking_camera.gd" id="11_lc7tx"]
 [ext_resource type="Script" path="res://Generic/Environment/decomposable.gd" id="12_i7sqd"]
@@ -68,21 +63,6 @@ shader_parameter/fire_color_4 = Color(0.59, 0.1357, 0.143272, 1)
 shader_parameter/water_noise = SubResource("NoiseTexture2D_mfg0d")
 shader_parameter/electric_noise = SubResource("NoiseTexture2D_0id2s")
 shader_parameter/fire_noise = SubResource("NoiseTexture2D_3ywcn")
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_70c21"]
-
-[sub_resource type="Animation" id="Animation_ouxfy"]
-resource_name = "idle_down"
-length = 0.01
-
-[sub_resource type="Animation" id="Animation_o3opd"]
-resource_name = "move_down"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_52fvt"]
-_data = {
-"idle_down": SubResource("Animation_ouxfy"),
-"move_down": SubResource("Animation_o3opd")
-}
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_u52nw"]
 rough = true
@@ -174,76 +154,8 @@ centered = false
 visibility_layer = 515
 position = Vector2(0, -720)
 
-[node name="Player" parent="." instance=ExtResource("4_02fpl")]
-position = Vector2(390, 314)
-
-[node name="Chaz" type="CharacterBody2D" parent="."]
-y_sort_enabled = true
-position = Vector2(364, 315)
-collision_mask = 0
-script = ExtResource("5_gdbgy")
-init_state = ExtResource("6_qm657")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Chaz"]
-visible = false
-position = Vector2(0, -14)
-shape = SubResource("CapsuleShape2D_70c21")
-
-[node name="Chaz" type="Sprite2D" parent="Chaz"]
-texture = ExtResource("7_ipin2")
-offset = Vector2(0, -25)
-
-[node name="DirectionalAnimator" type="AnimationPlayer" parent="Chaz"]
-libraries = {
-"": SubResource("AnimationLibrary_52fvt")
-}
-script = ExtResource("8_sv3tc")
-
-[node name="Footprint" type="ColorRect" parent="Chaz"]
-z_index = -8
-z_as_relative = false
-offset_left = -7.0
-offset_top = -6.0
-offset_right = 7.0
-offset_bottom = 4.0
-
-[node name="ParticlePosition" type="Node2D" parent="Chaz"]
-
-[node name="Mei" type="CharacterBody2D" parent="."]
-y_sort_enabled = true
-position = Vector2(339, 315)
-collision_mask = 0
-script = ExtResource("5_gdbgy")
-init_state = ExtResource("6_qm657")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Mei"]
-visible = false
-position = Vector2(0, -14)
-shape = SubResource("CapsuleShape2D_70c21")
-
-[node name="Sprite2D" type="Sprite2D" parent="Mei"]
-position = Vector2(0, -24)
-texture = ExtResource("9_lk70p")
-
-[node name="DirectionalAnimator" type="AnimationPlayer" parent="Mei"]
-libraries = {
-"": SubResource("AnimationLibrary_52fvt")
-}
-script = ExtResource("8_sv3tc")
-
-[node name="Footprint" type="ColorRect" parent="Mei"]
-z_index = -8
-z_as_relative = false
-offset_left = -7.0
-offset_top = -6.0
-offset_right = 7.0
-offset_bottom = 4.0
-
-[node name="ParticlePosition" type="Node2D" parent="Mei"]
-
-[node name="ShadowMale" type="Sprite2D" parent="."]
-position = Vector2(400, -48)
-texture = ExtResource("10_70eed")
+[node name="Izzy" parent="." instance=ExtResource("5_1eru1")]
+position = Vector2(349, 231)
 
 [node name="ShadowMale2" type="Sprite2D" parent="."]
 position = Vector2(512, 128)
@@ -257,14 +169,10 @@ texture = ExtResource("10_70eed")
 position = Vector2(112, 320)
 texture = ExtResource("10_70eed")
 
-[node name="ShadowMale5" type="Sprite2D" parent="."]
-position = Vector2(145, -120)
-texture = ExtResource("10_70eed")
-
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("leader")]
 position = Vector2(590, 200)
 script = ExtResource("11_lc7tx")
-leader = NodePath("../Player")
+leader = NodePath("../Izzy")
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D"]
 z_index = -3
@@ -289,7 +197,6 @@ collision_mask = 16
 physics_material_override = SubResource("PhysicsMaterial_u52nw")
 script = ExtResource("12_i7sqd")
 height_scale_float = 2.0
-max_distance = 40.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Decomposable"]
 material = SubResource("ShaderMaterial_diq5l")

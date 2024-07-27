@@ -35,8 +35,8 @@ func _physics_process(delta: float) -> void:
 	
 	if global_position.y + 180 > GameState.level_size.y:
 		global_position.y = GameState.level_size.y - 180
-	elif global_position.y < -180:
-		global_position.y = -180
+	elif global_position.y < 180:
+		global_position.y = 180
 
 
 func _on_cam_follow_requested(node: Node2D) -> void:

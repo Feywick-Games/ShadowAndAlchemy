@@ -102,12 +102,22 @@ void fragment() {
 		col = p_col;
 	}
 
-	if (d_col.b > 0.0) {
+	if (d_col.b > 0.5) {
 		COLOR = vec4(0);
 	}
 	else if(sin(time) < rand(within_texture_pixel))
 	{
 		COLOR = vec4(0);
+	}
+	else if (d_col.b > 0.0) {
+		if (int(sin(TIME * 10.0) + rand(within_texture_pixel) * 100.0) % 2 != 0     )
+		{
+			COLOR = vec4(0);
+		}
+		else
+		{
+			COLOR = col;
+		}
 	}
 	else if (neighbor_fire && (col.a > 0.0))
 	{
@@ -188,10 +198,11 @@ void fragment() {
 			}
 		}
 	}
-	else if (neighbor_disintegrated)
+	else if (neighbor_disintegrated && p_col.a != 0.0)
 	{
 		COLOR = p_col;
 	}
+
 	else if (t_col.a == 0.0 && p_col.a > 0.0)
 	{
 		COLOR = p_col;

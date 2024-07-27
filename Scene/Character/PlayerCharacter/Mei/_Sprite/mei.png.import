@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duyud00fbacwr"
-path="res://.godot/imported/chaz.png-1c25a712d4a34b2ed4d24e932153c65c.ctex"
+uid="uid://bcdh7j2xjmlqf"
+path="res://.godot/imported/mei.png-13d183aabab5e039b7a7aca30666dc41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scene/Character/Chaz/chaz.png"
-dest_files=["res://.godot/imported/chaz.png-1c25a712d4a34b2ed4d24e932153c65c.ctex"]
+source_file="res://Scene/Character/PlayerCharacter/Mei/_Sprite/mei.png"
+dest_files=["res://.godot/imported/mei.png-13d183aabab5e039b7a7aca30666dc41.ctex"]
 
 [params]
 

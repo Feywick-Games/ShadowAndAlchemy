@@ -66,11 +66,12 @@ void fragment() {
 		flame_exception = false;
 	}
 
-	if (map_color.r == 0.0 && reaction_color.g == 0.0 && !flame_exception)
+	
+	if (reaction_color.g > 0.0 && reaction_color.g < 0.5)
 	{
-		COLOR = color;
+		COLOR = mix(color, white_color, .5);
 	}
-	else if (map_color.r <= water_effect_mask && reaction_color.g == 0.0 && !flame_exception)
+	else if (map_color.r <= water_effect_mask && map_color.r != 0.0 && reaction_color.g == 0.0 && !flame_exception)
 	{
 		vec4 map_color_u = texture(effect_map, world_uv + (TEXTURE_PIXEL_SIZE * vec2(0,1)));
 		vec4 map_color_d = texture(effect_map, world_uv + (TEXTURE_PIXEL_SIZE * vec2(0,-1)));
@@ -112,7 +113,7 @@ void fragment() {
 		}
 	}
 
-	else if (map_color.r <= fire_effect_mask && reaction_color.g == 0.0  || flame_exception) {
+	else if (map_color.r <= fire_effect_mask && map_color.r > water_effect_mask && reaction_color.g == 0.0  || flame_exception) {
 
 		vec4 map_color_d = texture(effect_map, world_uv + (TEXTURE_PIXEL_SIZE * vec2(0,1)));
 		vec4 map_color_u = texture(effect_map, world_uv + (TEXTURE_PIXEL_SIZE * vec2(0,-1)));
@@ -239,5 +240,9 @@ void fragment() {
 				COLOR = electric_color_2;
 			}
 		}
+	}
+	else
+	{
+		COLOR = color;
 	}
 }

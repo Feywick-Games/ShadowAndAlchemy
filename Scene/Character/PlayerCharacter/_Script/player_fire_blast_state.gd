@@ -1,11 +1,10 @@
 class_name PlayerFireBlastState
-extends State
+extends PlayerState
 
-var _player: Player
 var _directional_animator: DirectionalAnimator
 
 func enter() -> void:
-	_player = state_machine.state_owner as Player
+	super.enter()
 	var mouse_pos: Vector2 = _player.get_global_mouse_position()
 	var direction = (mouse_pos - _player.global_position).normalized()
 	_player.cast_effect(direction, _player.FIRE_BLAST_SCENE.instantiate())

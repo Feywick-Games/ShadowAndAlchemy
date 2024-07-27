@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcdh7j2xjmlqf"
-path="res://.godot/imported/mei.png-2b62963ca35d7559440287700e9e24cb.ctex"
+uid="uid://be1ecl8c5o6dk"
+path="res://.godot/imported/player_CombatIdleUp.png-874193ef5854f70311d4bbd95a97a650.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scene/Character/Mei/_Sprite/mei.png"
-dest_files=["res://.godot/imported/mei.png-2b62963ca35d7559440287700e9e24cb.ctex"]
+source_file="res://Scene/Character/PlayerCharacter/Izzy/_Sprite/player_CombatIdleUp.png"
+dest_files=["res://.godot/imported/player_CombatIdleUp.png-874193ef5854f70311d4bbd95a97a650.ctex"]
 
 [params]
 

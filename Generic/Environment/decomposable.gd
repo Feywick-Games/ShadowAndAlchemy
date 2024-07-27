@@ -54,21 +54,11 @@ func _physics_process(delta: float) -> void:
 		
 	if not overlapping_areas.is_empty():
 		for area in overlapping_areas:
-			var radius: int = area.circle_shape.radius
+			if is_instance_valid(area):
+				# WARNING: Magic number. Adds the additional radius of absorb blasts feat effect
+				var radius: int = max(area.circle_shape.radius - 6,2)
+				generate_impact_poly(to_local(area.global_position), radius)
 
-			var impact: PackedVector2Array = Geometry.generate_arc(radius, 2, 0, TAU, Vector2(1,.75))
-			var origin := to_local(area.global_position)
-
-			for i in range(len(impact)):
-				impact[i] += origin
-
-			var impact_poly := Polygon2D.new()
-			add_child(impact_poly)
-			impact_poly.set_visibility_layer_bit(0,false)
-			impact_poly.set_visibility_layer_bit(9,true)
-			impact_poly.polygon = impact
-			impact_poly.color = Color.BLUE
-					
 					
 func _on_area_entered(area: Area2D) -> void:
 	overlapping_areas.append(area)
@@ -81,6 +71,28 @@ func _absorb_terminated(absorb: AbsorbBlast) -> void:
 	_on_area_exited(absorb)
 	var idx := overlapping_areas.find(absorb)
 	overlapping_areas.remove_at(idx)
+	var radius: int = absorb.circle_shape.radius
+	generate_impact_poly(to_local(absorb.global_position), radius)
+	
+
+
+
+func generate_impact_poly(origin: Vector2, radius: int) -> void:
+	var impact: PackedVector2Array = Geometry.generate_arc(radius, 2, 0, TAU, Vector2(1,.75))
+	for i in range(len(impact)):
+		impact[i] += origin
+	
+	var impact_poly := Polygon2D.new()
+	add_child(impact_poly)
+	
+	var new_mat := CanvasItemMaterial.new()
+	new_mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	impact_poly.material = new_mat
+	impact_poly.rotation = -rotation
+	impact_poly.set_visibility_layer_bit(0,false)
+	impact_poly.set_visibility_layer_bit(9,true)
+	impact_poly.polygon = impact
+	impact_poly.color = Color.BLUE
 
 
 func _on_area_exited(area: AbsorbBlast) -> void:
@@ -141,9 +153,3 @@ func _on_area_exited(area: AbsorbBlast) -> void:
 
 	
 	
-	var impact_poly := Polygon2D.new()
-	add_child(impact_poly)
-	impact_poly.set_visibility_layer_bit(0,false)
-	impact_poly.set_visibility_layer_bit(9,true)
-	impact_poly.polygon = impact
-	impact_poly.color = Color.BLUE

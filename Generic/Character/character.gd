@@ -8,12 +8,20 @@ var cast_width: float = 32
 var init_state: GDScript
 @export
 var speed: float = 50
+@export_enum("Up", "Down", "Left", "Right")
+var start_direction: String = "Down"
 
+
+@onready
+var directional_animator: DirectionalAnimator = $DirectionalAnimator
+@onready
+var fx_animator: DirectionalAnimator = $FxAnimator
 @onready
 var footprint: ColorRect = $Footprint
 
 
 func _ready() -> void:
+	directional_animator.current_direction = start_direction.to_lower()
 	var state_machine := StateMachine.new(self, init_state.new())
 	add_child(state_machine)
 

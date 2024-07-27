@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://3s1g5bmw00u2" path="res://Scene/Level/_Sprite/floor.png" id="1_5hoft"]
 [ext_resource type="Script" path="res://Scene/Level/_Script/level.gd" id="1_6vgw7"]
-[ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/Player/player.tscn" id="1_ckvfe"]
+[ext_resource type="PackedScene" uid="uid://5dadhjd3c84b" path="res://Scene/Character/PlayerCharacter/player.tscn" id="1_ckvfe"]
 [ext_resource type="Shader" path="res://Scene/Level/_Material/floor.gdshader" id="1_fe0gm"]
-[ext_resource type="Texture2D" uid="uid://bcdh7j2xjmlqf" path="res://Scene/Character/Mei/_Sprite/mei.png" id="2_0i3fu"]
+[ext_resource type="Texture2D" uid="uid://bcdh7j2xjmlqf" path="res://Scene/Character/PlayerCharacter/Mei/_Sprite/mei.png" id="2_0i3fu"]
 [ext_resource type="Script" path="res://Generic/Camera/tracking_camera.gd" id="3_dvrra"]
 [ext_resource type="Texture2D" uid="uid://de327rhr7qob7" path="res://Scene/Character/Enemy/Shadow/_Sprite/shadow_male.png" id="4_ivj2t"]
 [ext_resource type="Texture2D" uid="uid://xgp2exyw3y2q" path="res://Scene/Level/_Sprite/siren_statue.png" id="5_l08pv"]
@@ -21,7 +21,7 @@
 [ext_resource type="Shader" path="res://Scene/Level/_Material/decomposable.gdshader" id="12_56x0b"]
 [ext_resource type="Texture2D" uid="uid://dcyl86lhu3qby" path="res://Scene/Level/_Sprite/siren_statue_base.png" id="13_wgxxi"]
 [ext_resource type="Texture2D" uid="uid://bngyyfq4e71df" path="res://Scene/Level/_Sprite/tentacle_phone.png" id="14_ly03l"]
-[ext_resource type="Texture2D" uid="uid://duyud00fbacwr" path="res://Scene/Character/Chaz/chaz.png" id="16_fu6la"]
+[ext_resource type="Texture2D" uid="uid://duyud00fbacwr" path="res://Scene/Character/PlayerCharacter/Chaz/chaz.png" id="16_fu6la"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vtu4d"]
 frequency = 0.342

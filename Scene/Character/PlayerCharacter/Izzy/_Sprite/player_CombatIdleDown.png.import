@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://uc7l5srkggjn"
-path="res://.godot/imported/player.png-60724a3a2711941078d971e516e8a653.ctex"
+uid="uid://c0ub4div4e70d"
+path="res://.godot/imported/player_CombatIdleDown.png-e26f4b4fb97f6be8882d0008caf68908.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scene/Character/Player/_Sprite/player.png"
-dest_files=["res://.godot/imported/player.png-60724a3a2711941078d971e516e8a653.ctex"]
+source_file="res://Scene/Character/PlayerCharacter/Izzy/_Sprite/player_CombatIdleDown.png"
+dest_files=["res://.godot/imported/player_CombatIdleDown.png-e26f4b4fb97f6be8882d0008caf68908.ctex"]
 
 [params]
 
